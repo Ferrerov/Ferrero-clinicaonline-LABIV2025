@@ -11,7 +11,10 @@
         [ngClass]="registro ? 'registro-activo' : 'registro-inactivo'"
       >
         @if(!registro){
-        <div class="caja especialista" (click)="cambiarSeleccion('especialista')">
+        <div
+          class="caja especialista"
+          (click)="cambiarSeleccion('especialista')"
+        >
           <div class="imagen"></div>
           <div class="pie">
             <h2>ESPECIALISTA</h2>
@@ -23,27 +26,31 @@
             <h2>PACIENTE</h2>
           </div>
         </div>
-        <div class="caja administrador" (click)="cambiarSeleccion('administrador')">
+        @if(authService.currentUser()?.tipo === 'administrador'){
+        <div
+          class="caja administrador"
+          (click)="cambiarSeleccion('administrador')"
+        >
           <div class="imagen"></div>
           <div class="pie">
             <h2>ADMINISTRADOR</h2>
           </div>
         </div>
-        } @else {
+        } } @else {
         <div class="regresar">
           <button mat-fab extended (click)="cambiarSeleccion('volver')">
             <mat-icon>arrow_back</mat-icon>
             Volver a seleccionar
           </button>
           <div class="descripcion">
-            <h1>registro de {{tipoUsuario}}</h1>
+            <h1>registro de {{ tipoUsuario }}</h1>
           </div>
         </div>
         }
       </div>
       @if(registro) {
       <div class="registro">
-        <app-form-registro [tipoUsuario]="tipoUsuario"></app-form-registro>
+        <app-form-registro [tipoUsuario]="tipoUsuario" [habilitado]="habilitado"></app-form-registro>
       </div>
       }
     </div>

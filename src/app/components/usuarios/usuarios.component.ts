@@ -10,10 +10,11 @@ import { AdministradorInterface } from '../../interfaces/administrador.interface
 import { EspecialistaInterface } from '../../interfaces/especialista.interface';
 import { UsuarioBaseInterface } from '../../interfaces/usuario-base.interface';
 import { MatIcon } from '@angular/material/icon';
+import { RegistroComponent } from '../registro/registro.component';
 
 @Component({
   selector: 'app-usuarios',
-  imports: [MatTableModule, MatSortModule, CommonModule, MatIcon, MatButtonModule],
+  imports: [MatTableModule, MatSortModule, CommonModule, MatIcon, MatButtonModule, RegistroComponent],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.scss',
   standalone: true
@@ -23,7 +24,7 @@ export class UsuariosComponent {
   resultadosSuscripcion!: Subscription;
   dataSource!: any;
   columnsToDisplay: string[] = [];
-  tipoUsuario: 'paciente' | 'especialista' | 'administrador' = 'administrador';
+  tipoUsuario: 'paciente' | 'especialista' | 'administrador' | null = 'administrador';
   configUsuarios = {
   paciente: {
     columnas: ['imagen_uno', 'nombre', 'apellido', 'edad', 'dni', 'correo', 'obra_social'],
@@ -59,13 +60,8 @@ private cargarUsuarios<T extends UsuarioBaseInterface>(
     });
 }
 
-  cambiarTabla(tipo: 'paciente' | 'especialista' | 'administrador'): void {
-    this.tipoUsuario = tipo;
-    this.cargarDatos();
-  }
-
   cargarDatos(): void {
-  const config = this.configUsuarios[this.tipoUsuario];
+  const config = this.configUsuarios[this.tipoUsuario!];
 
   if (!config) return;
 
@@ -96,10 +92,20 @@ private cargarUsuarios<T extends UsuarioBaseInterface>(
         },
         error: (err) => console.error('Error al actualizar habilitado:', err)
       });**/
+      this.supabase.actualizar<UsuarioBaseInterface>(
+      'usuarios',
+      { habilitado: nuevoEstado},
+      { correo: element.correo }
+    ).then((res) => {
+      console.log('Usuario actualizado:', res);
+      this.cargarDatos();
+    }).catch(() => {
+      console.log('Error al actualizar el usuario');
+    });
   }
 
-  cambiarSeleccion(tipo: 'paciente' | 'especialista' | 'administrador'){
+  cambiarSeleccion(tipo: 'paciente' | 'especialista' | 'administrador' | null){
     this.tipoUsuario  = tipo;
-    this.cargarDatos();
+    if(tipo) this.cargarDatos();
   }
 }

@@ -48,7 +48,7 @@
                 }
 
             }
-            .registro{
+            .btnRegistro{
                 height: 100%;
                 //width: 100%;
                 width: 30%;
@@ -81,6 +81,14 @@
                     color: #F7F7F2;
                     border-color: #CBA368;
                     text-align: center;
+                    .habilitado{
+                        background-color: #a82e25;;
+                        color: #EAF4F8;
+                    }
+                    .deshabilitado{
+                        background-color: #43a027;
+                        color: #EAF4F8;
+                    }
                 }
                 .imagen{
                         padding: 1%;
@@ -94,6 +102,9 @@
                     }
                 }
             }
+        }
+        .registro{
+            height: 100%;
         }
     }
 }

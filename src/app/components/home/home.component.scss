@@ -1,0 +1,15 @@
+.pagina{
+    height: 100%;
+    width: 100%;
+    .contenido{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #EAF4F8;
+        p{
+            font-size: xx-large;
+        }
+    }
+}

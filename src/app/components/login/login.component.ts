@@ -77,6 +77,7 @@ export class LoginComponent {
           } else {
             //this.router.navigateByUrl('/home');
             console.log('Se inicio sesion');
+            this.router.navigateByUrl('/home');
           }
         });
     //}

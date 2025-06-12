@@ -50,6 +50,26 @@ export class SupabaseDbService {
 
     return data as T;
   }
+  async actualizar<T>(
+    tabla: string,
+    campos: Partial<T>,
+    condicion: Partial<T>
+  ): Promise<T> {
+    const { data, error } = await this.supabase
+      .from(tabla)
+      .update(campos)
+      .match(condicion)
+      .select()
+      .single();
+
+    if (error) {
+      console.error(`Error al actualizar en ${tabla}:`, error);
+      throw error;
+    }
+
+    return data as T;
+  }
+
   async buscarUno<T>(
     tabla: string,
     columna: string,

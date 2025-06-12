@@ -26,6 +26,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { SupabaseDbService } from '../../services/supabase.service';
 import { UsuarioBaseInterface } from '../../interfaces/usuario-base.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form-registro',
@@ -48,11 +49,13 @@ import { UsuarioBaseInterface } from '../../interfaces/usuario-base.interface';
 })
 export class FormRegistroComponent {
   @Input() tipoUsuario!: 'paciente' | 'especialista' | 'administrador';
+  @Input() habilitado: boolean = false;
   hide = signal(true);
   authService = inject(AuthService);
   supabase = inject(SupabaseDbService);
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   errorSupabase: string | null = null;
+  router = inject(Router);
 
   listadoObrasSociales = signal<string[]>([
     'Swiss Medical',
@@ -67,17 +70,9 @@ export class FormRegistroComponent {
     1: signal<File | null>(null),
     2: signal<File | null>(null),
   };
-
   imagenSeleccionada = signal(false);
   urlImagenDefault: string =
     'https://crhmhrazcvpkqjxorqfl.supabase.co/storage/v1/object/public/assets//sbcf-default-avatar.png';
-
-  /*readonly vistaImagen = (numero: 1 | 2) =>
-    computed(() =>
-      this.imagenes[numero]()
-        ? URL.createObjectURL(this.imagenes[numero]()!)
-        : this.urlImagenDefault
-    );*/
   readonly vistaImagen = {
     1: signal<string>(this.urlImagenDefault),
     2: signal<string>(this.urlImagenDefault),
@@ -145,7 +140,7 @@ export class FormRegistroComponent {
       dni: rawForm.dni,
       correo: rawForm.correo,
       imagen_uno: '',
-      habilitado: this.tipoUsuario === 'especialista' ? false : true,
+      habilitado: this.tipoUsuario === 'especialista' ? this.habilitado : true,
       imagen_dos: this.tipoUsuario === 'paciente' ? '': null,
       tipo: this.tipoUsuario,
       especialidad:
@@ -189,13 +184,13 @@ export class FormRegistroComponent {
           .insertar<UsuarioBaseInterface>('usuarios', usuarioNuevo)
           .then((res) => {
             console.log('Usuario guardado en Supabase:', res);
-            // redireccionar, mostrar mensaje, etc.
+            this.habilitado ? this.tipoUsuario='administrador' : this.router.navigateByUrl('/home');
           })
           .catch((err) => {
             this.errorSupabase = 'Error al guardar en la base de datos';
           });
-          //this.router.navigateByUrl('/home');
           console.log('Usuario registrado correctamente');
+        
         }
       });
   }

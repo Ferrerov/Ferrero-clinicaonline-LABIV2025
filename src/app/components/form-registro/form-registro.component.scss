@@ -114,6 +114,11 @@
                 border-radius: 5px;
               }
             }
+            mat-error{
+              width: 100%;
+              text-align: center;
+              padding-top: 3%;
+            }
           }
         }
       }

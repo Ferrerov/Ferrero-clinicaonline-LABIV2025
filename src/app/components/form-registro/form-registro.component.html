@@ -1,0 +1,207 @@
+<div class="pagina">
+  <div class="contenido">
+    <div class="formulario">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="campos">
+          <div class="columna izquierda">
+            <mat-form-field appearance="outline">
+              <mat-label>Nombre</mat-label>
+              <input
+                matInput
+                placeholder="Valentin"
+                formControlName="nombre"
+              />
+              <mat-icon matSuffix>person</mat-icon>
+              <!-- @if (form.controls.correo.hasError('email') &&
+              !form.controls.correo.hasError('required')) {
+              <mat-error>Ingrese un correo valido</mat-error>
+              } @if (form.controls.correo.hasError('required')) {
+              <mat-error>El correo es requerido</mat-error>
+              } -->
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Apellido</mat-label>
+              <input
+                matInput
+                placeholder="Ferrero"
+                formControlName="apellido"
+              />
+              <mat-icon matSuffix>person</mat-icon>
+              <!-- @if (form.controls.correo.hasError('email') &&
+              !form.controls.correo.hasError('required')) {
+              <mat-error>Ingrese un correo valido</mat-error>
+              } @if (form.controls.correo.hasError('required')) {
+              <mat-error>El correo es requerido</mat-error>
+              } -->
+            </mat-form-field>
+            <mat-form-field class="campo campo-edad" appearance="outline">
+              <mat-label>Edad</mat-label>
+              <input
+                matInput
+                placeholder="Ingrese su edad"
+                type="number"
+                formControlName="edad"
+              />
+              <!-- @if (form.controls.edad.hasError('required')) {
+              <mat-error>Requerida</mat-error>
+              } @if (form.controls.edad.hasError('min')) {
+              <mat-error>Minimo 1</mat-error>
+              } @if (form.controls.edad.hasError('max')) {
+              <mat-error>Maximo 99</mat-error>
+              } -->
+            </mat-form-field>
+            <mat-form-field class="campo campo-dni" appearance="outline">
+              <mat-label>D.N.I</mat-label>
+              <input
+                matInput
+                placeholder="Ingrese su DNI"
+                formControlName="dni"
+              />
+              <!-- @if (form.controls.dni.hasError('required')) {
+              <mat-error>El dni es requerido</mat-error>
+              } @if (form.controls.dni.hasError('min')) {
+              <mat-error>Son minimo 7 caracteres</mat-error>
+              } @if (form.controls.dni.hasError('max')) {
+              <mat-error>Son maximo 8 caracteres</mat-error>
+              } -->
+            </mat-form-field>
+            @if(tipoUsuario === 'especialista'){
+            <mat-form-field class="campo campo-especialidad" appearance="outline">
+            <mat-label>Especialidad/es</mat-label>
+            <mat-chip-grid #chipGrid formControlName="especialidad">
+              @for (especialidad of especialidadesSeleccionadas(); track $index) {
+              <mat-chip-row (removed)="eliminarEspecialidad(especialidad)">
+                {{ especialidad }}
+                <button
+                  matChipRemove
+                  [attr.aria-label]="'remove ' + especialidad"
+                >
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+              }
+            </mat-chip-grid>
+            <input
+              name="especialidadActual"
+              placeholder="Ingrese su especialidad"
+              [matChipInputFor]="chipGrid"
+              [matAutocomplete]="autoEspecialidad"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="agregarEspecialidad($event)"
+            />
+            @if (form.controls.especialidad.hasError('required')) {
+              <mat-error>Seleccione una opcion</mat-error>
+            }
+            <mat-autocomplete
+              #autoEspecialidad="matAutocomplete"
+              (optionSelected)="seleccionarEspecialidad($event)"
+            >
+              @for (especialidad of especialidadesFiltradas(); track
+              especialidad) {
+              <mat-option [value]="especialidad">{{ especialidad }}</mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+          }
+          @if(tipoUsuario === 'paciente'){
+            <mat-form-field class="campo campo-obrasocial" appearance="outline">
+            <mat-label>Obra social</mat-label>
+            <input
+              type="text"
+              placeholder="Ingrese su obra social"
+              matInput
+              [matAutocomplete]="autoObraSocial"
+              formControlName="obra_social"
+            />
+            @if (form.controls.obra_social.hasError('required')) {
+            <mat-error>Seleccione una opcion</mat-error>
+            }
+            <mat-autocomplete #autoObraSocial="matAutocomplete">
+              @for (obraSocial of listadoObrasSociales(); track
+              obraSocial) {
+              <mat-option [value]="obraSocial">{{ obraSocial }}</mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+          }
+          </div>
+          <div class="columna derecha">
+            <div class="imagenes">
+              <div class="imagen imagen-uno">
+                <img [src]="vistaImagen[1]()" alt="Imagen 1" />
+                <input
+                  type="file"
+                  class="file-input"
+                  (change)="seleccionarImagen($event, 1)"
+                  #inputImagenUno
+                  formControlName="imagen_uno"
+                />
+                <div class="overlay-imagen" (click)="inputImagenUno.click()">
+                  <mat-icon fontIcon="edit"></mat-icon>
+                </div>
+              </div>
+              @if(tipoUsuario === 'paciente'){
+              <div class="imagen imagen-dos">
+                <img [src]="vistaImagen[2]()" alt="Imagen 2" />
+                <input
+                  type="file"
+                  class="file-input"
+                  (change)="seleccionarImagen($event, 2)"
+                  #inputImagenDos
+                  formControlName="imagen_dos"
+                />
+                <div class="overlay-imagen" (click)="inputImagenDos.click()">
+                  <mat-icon fontIcon="edit"></mat-icon>
+                </div>
+              </div>
+            }
+            </div>
+            <mat-form-field appearance="outline">
+              <mat-label>Correo Electronico</mat-label>
+              <input
+                matInput
+                placeholder="valentin@example.com"
+                formControlName="correo"
+              />
+              <mat-icon matSuffix>alternate_email</mat-icon>
+              <!-- @if (form.controls.correo.hasError('email') &&
+              !form.controls.correo.hasError('required')) {
+              <mat-error>Ingrese un correo valido</mat-error>
+              } @if (form.controls.correo.hasError('required')) {
+              <mat-error>El correo es requerido</mat-error>
+              } -->
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Contraseña</mat-label>
+              <input
+                matInput
+                [type]="hide() ? 'password' : 'text'"
+                formControlName="contrasena"
+              />
+              <button
+                type="button"
+                mat-icon-button
+                matSuffix
+                (click)="clickEvent($event)"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide()"
+              >
+                <mat-icon>{{
+                  hide() ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+              <!-- @if (form.controls.contrasena.hasError('required')) {
+            <mat-error>La contraseña es requerida</mat-error>
+            } -->
+            </mat-form-field>
+            <div class="boton">
+              <button class="button" type="submit" mat-flat-button>
+                Registrarse
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

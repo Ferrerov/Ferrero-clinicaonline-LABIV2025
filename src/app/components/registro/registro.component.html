@@ -1,0 +1,51 @@
+<div class="pagina">
+  <div class="contenido">
+    @if(!registro){
+    <div class="encabezado">
+      <h1>Registro</h1>
+    </div>
+    }
+    <div class="seleccion">
+      <div
+        class="botones"
+        [ngClass]="registro ? 'registro-activo' : 'registro-inactivo'"
+      >
+        @if(!registro){
+        <div class="caja especialista" (click)="cambiarSeleccion('especialista')">
+          <div class="imagen"></div>
+          <div class="pie">
+            <h2>ESPECIALISTA</h2>
+          </div>
+        </div>
+        <div class="caja paciente" (click)="cambiarSeleccion('paciente')">
+          <div class="imagen"></div>
+          <div class="pie">
+            <h2>PACIENTE</h2>
+          </div>
+        </div>
+        <div class="caja administrador" (click)="cambiarSeleccion('administrador')">
+          <div class="imagen"></div>
+          <div class="pie">
+            <h2>ADMINISTRADOR</h2>
+          </div>
+        </div>
+        } @else {
+        <div class="regresar">
+          <button mat-fab extended (click)="cambiarSeleccion('volver')">
+            <mat-icon>arrow_back</mat-icon>
+            Volver a seleccionar
+          </button>
+          <div class="descripcion">
+            <h1>registro de {{tipoUsuario}}</h1>
+          </div>
+        </div>
+        }
+      </div>
+      @if(registro) {
+      <div class="registro">
+        <app-form-registro [tipoUsuario]="tipoUsuario"></app-form-registro>
+      </div>
+      }
+    </div>
+  </div>
+</div>

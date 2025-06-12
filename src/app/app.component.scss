@@ -1,0 +1,21 @@
+.pagina {
+  height: 100%;
+  width: 100%;
+  background-color: #061630;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .navbar {
+    width: 90%;
+    height: 10%;
+    padding: 0%;
+    app-navbar {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .interfaz {
+    height: 90%;
+    width: 100%;
+  }
+}

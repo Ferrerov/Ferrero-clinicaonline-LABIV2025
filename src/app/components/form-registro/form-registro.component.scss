@@ -1,0 +1,122 @@
+.pagina {
+  height: 100%;
+  width: 100%;
+  .contenido {
+    height: 100%;
+    width: 100%;
+    .formulario {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1%;
+      form {
+        //height: 90%;
+        width: 100%;
+        .campos {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          .columna {
+            height: 100%;
+            width: 50%;
+            padding: 1%;
+            display: flex;
+            flex-direction: column;
+            mat-label {
+              color: #eaf4f8;
+            }
+            mat-form-field {
+              //width: 40%;
+              --mdc-outlined-text-field-caret-color: #cba368;
+              --mdc-outlined-text-field-focus-outline-color: #cba368;
+              --mdc-outlined-text-field-focus-label-text-color: #cba368;
+              --mdc-outlined-text-field-hover-outline-color: #cba368;
+              input {
+                color: #eaf4f8;
+              }
+              input::-webkit-outer-spin-button,
+              input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+              }
+            }
+          }
+          mat-chip-grid {
+            --mdc-chip-container-shape-family: rounded;
+            --mdc-chip-container-shape-radius: 5px;
+            --mdc-chip-label-text-color: #eaf4f8;
+            --mdc-chip-with-trailing-icon-trailing-icon-color: #CBA368;
+          }
+          mat-autocomplete {
+              background-color: #112138;
+          }
+          .izquierda {
+          }
+          .derecha {
+            //background-color: aqua;
+            .imagenes {
+              height: 50%;
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              .imagen {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                padding: 1%;
+                img {
+                  height: 120px;
+                  width: 120px;
+                  border-radius: 50%;
+                }
+                .overlay-imagen {
+                  background-color: #eaf4f8;
+                  height: 120px;
+                  width: 120px;
+                  position: absolute;
+                  border-radius: 50%;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  display: none;
+                  mat-icon {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100%;
+                    width: 100%;
+                    font-size: 500%;
+                    color: #061630;
+                  }
+                }
+                .file-input {
+                  display: none;
+                }
+              }
+              .imagen:hover {
+                .overlay-imagen {
+                  display: block;
+                  filter: opacity(50%);
+                  cursor: pointer;
+                }
+              }
+            }
+            .boton {
+              display: flex;
+              justify-content: center;
+              button {
+                background-color: #cba368;
+                border-radius: 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

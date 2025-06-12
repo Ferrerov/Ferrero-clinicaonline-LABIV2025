@@ -1,0 +1,85 @@
+<div class="pagina">
+  <div class="contenido">
+    <div class="principal caja">
+      <h1>Inicar Sesión</h1>
+      <div class="formulario">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline">
+            <mat-label>Correo Electronico</mat-label>
+            <input
+              matInput
+              placeholder="valentin@example.com"
+              formControlName="correo"
+            />
+            <mat-icon matSuffix>alternate_email</mat-icon>
+            @if (form.controls.correo.hasError('email') &&
+            !form.controls.correo.hasError('required')) {
+            <mat-error>Ingrese un correo valido</mat-error>
+            } @if (form.controls.correo.hasError('required')) {
+            <mat-error>El correo es requerido</mat-error>
+            }
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input
+              matInput
+              [type]="hide() ? 'password' : 'text'"
+              formControlName="contrasena"
+            />
+            <button
+              type="button"
+              mat-icon-button
+              matSuffix
+              (click)="clickEvent($event)"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide()"
+            >
+              <mat-icon>{{
+                hide() ? "visibility_off" : "visibility"
+              }}</mat-icon>
+            </button>
+            @if (form.controls.contrasena.hasError('required')) {
+            <mat-error>La contraseña es requerida</mat-error>
+            }
+          </mat-form-field>
+          <div class="botones">
+            <button
+              class="button"
+              type="submit"
+              mat-stroked-button
+              [disabled]="form.invalid"
+            >
+              Iniciar Sesion
+            </button>
+          </div>
+          @if (errorSupabase !== null) {
+          <mat-error id="errorSupabase">{{ errorSupabase }}</mat-error>
+          }
+        </form>
+      </div>
+    </div>
+    <div class="acceso-rapido caja">
+      <div class="encabezado">
+        <h1>USUARIOS PRESTABLECIDOS</h1>
+        <p>
+          Si no posee un usuario registrado, puede inciar sesión con un usuario
+          pre-registrado
+        </p>
+      </div>
+      <div class="botones">
+        <button mat-fab extended (click)="setCredenciales('enzo')">
+          <mat-icon>face</mat-icon>
+          Enzo
+        </button>
+        <button mat-fab extended (click)="setCredenciales('sandra')">
+          <mat-icon>face_3</mat-icon>
+          Sandra
+        </button>
+        <button mat-fab extended (click)="setCredenciales('ramon')">
+          <mat-icon>face_5</mat-icon>
+          Ramon
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+.pagina{
+    height: 100%;
+    width: 100%;
+    .contenido{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        .izquierda{
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 8%;
+            color: #EAF4F8;
+            h2{
+                font-size: 20px;
+            }
+            h1{
+                font-size: 35px;
+            }
+            p{
+                font-size: 16px;
+                margin: 2% 0;
+            }
+            .botones{
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                margin-top: 5%;
+                button{
+                    width: 60%;
+                    background-color: #CBA368;
+                    border-radius: 5px;
+                    margin-top: 1%;
+                    margin-bottom: 1%;
+                }
+            }
+        }
+        .derecha{
+            width: 50%;
+            height: 100%;
+            padding: 2%;
+            img{
+                height: 100%;
+            }
+        }
+    }
+}

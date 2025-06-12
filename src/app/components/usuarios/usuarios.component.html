@@ -1,0 +1,59 @@
+<div class="pagina">
+  <div class="contenido">
+    <div class="botones">
+      <div class="seleccion caja">
+        <button mat-fab extended (click)="cambiarSeleccion('paciente')">
+          <mat-icon>person</mat-icon>
+          Pacientes
+        </button>
+        <button mat-fab extended (click)="cambiarSeleccion('especialista')">
+          <mat-icon>person</mat-icon>
+          Especialistas
+        </button>
+        <button mat-fab extended (click)="cambiarSeleccion('administrador')">
+          <mat-icon>person</mat-icon>
+          Administradores
+        </button>
+      </div>
+      <div class="registro caja">
+        <button mat-fab extended>
+          <mat-icon>person</mat-icon>
+          Registar nuevo
+        </button>
+      </div>
+    </div>
+    <div class="tabla">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8"
+        matSort
+      >
+        @for (column of columnsToDisplay; track column) {
+        <ng-container [matColumnDef]="column">
+          <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+          @if(column === 'imagen_uno') {
+          <td mat-cell *matCellDef="let element" class="imagen">
+            <img src="{{ element[column] }}" />
+          </td>
+          } @else if(column === 'habilitado') {
+          <td mat-cell *matCellDef="let element">
+            <button
+              mat-button
+              color="primary"
+              (click)="toggleHabilitado(element)"
+            >
+              {{ element.habilitado ? "Deshabilitar" : "Habilitar" }}
+            </button>
+          </td>
+          } @else {
+          <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+          }
+        </ng-container>
+        }
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+      </table>
+    </div>
+  </div>
+</div>

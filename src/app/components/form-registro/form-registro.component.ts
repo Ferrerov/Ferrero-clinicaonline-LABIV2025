@@ -27,6 +27,10 @@ import { AuthService } from '../../services/auth.service';
 import { SupabaseDbService } from '../../services/supabase.service';
 import { UsuarioBaseInterface } from '../../interfaces/usuario-base.interface';
 import { Router } from '@angular/router';
+import { EspecialidadInterface } from '../../interfaces/especialidad.interface';
+import { ObraSocialInterface } from '../../interfaces/obra-social.interface';
+import { UsuarioObraSocialInterface } from '../../interfaces/usuarios-obra-social.interface';
+import { UsuariosEspecialidadInterface } from '../../interfaces/usuarios-especialidad.interface';
 
 @Component({
   selector: 'app-form-registro',
@@ -57,13 +61,7 @@ export class FormRegistroComponent {
   errorSupabase: string | null = null;
   router = inject(Router);
 
-  listadoObrasSociales = signal<string[]>([
-    'Swiss Medical',
-    'Federada',
-    'Osecac',
-    'Ioma',
-    'Pami',
-  ]);
+  listadoObrasSociales = signal<string[]>([]);
 
   //imagenes
   readonly imagenes = {
@@ -71,19 +69,13 @@ export class FormRegistroComponent {
     2: signal<File | null>(null),
   };
   imagenSeleccionada = signal(false);
-  urlImagenDefault: string =
-    'https://crhmhrazcvpkqjxorqfl.supabase.co/storage/v1/object/public/assets//sbcf-default-avatar.png';
+  urlImagenDefault: string = 'https://crhmhrazcvpkqjxorqfl.supabase.co/storage/v1/object/public/assets//sbcf-default-avatar.png';
   readonly vistaImagen = {
     1: signal<string>(this.urlImagenDefault),
     2: signal<string>(this.urlImagenDefault),
   };
   //especialidades
-  readonly especialidadesDisponibles = signal([
-    'Cardiología',
-    'Neurología',
-    'Pediatría',
-    'Oncología',
-  ]);
+  readonly especialidadesDisponibles = signal<string[]>([]);
   readonly especialidadesSeleccionadas = signal<string[]>([]);
   readonly especialidadInput = model('');
   readonly especialidadesFiltradas = computed(() => {
@@ -127,6 +119,24 @@ export class FormRegistroComponent {
       //this.form.get('especialidad')?.updateValueAndValidity();
     }
     this.form.updateValueAndValidity();
+    this.supabase
+      .buscarTodos<EspecialidadInterface>('especialidad')
+      .then((res) => {
+        const nombres = res.map((e) => e.nombre);
+        this.especialidadesDisponibles.set(nombres);
+      })
+      .catch((err) => {
+        console.error('Error al obtener especialidades:', err);
+      });
+    this.supabase
+      .buscarTodos<ObraSocialInterface>('obra_social')
+      .then((res) => {
+        const nombres = res.map((e) => e.nombre);
+        this.listadoObrasSociales.set(nombres);
+      })
+      .catch((err) => {
+        console.error('Error al obtener obras sociales:', err);
+      });
   }
 
   async onSubmit() {
@@ -141,33 +151,56 @@ export class FormRegistroComponent {
       correo: rawForm.correo,
       imagen_uno: '',
       habilitado: this.tipoUsuario === 'especialista' ? this.habilitado : true,
-      imagen_dos: this.tipoUsuario === 'paciente' ? '': null,
+      imagen_dos: this.tipoUsuario === 'paciente' ? '' : null,
       tipo: this.tipoUsuario,
-      especialidad:
-        this.tipoUsuario === 'especialista'
-          ? JSON.stringify(rawForm.especialidad)
-          : null,
-      obra_social: this.tipoUsuario === 'paciente' ? rawForm.obra_social : null,
+      //especialidad: this.tipoUsuario === 'especialista' ? rawForm.especialidad : null,
+      //obra_social: this.tipoUsuario === 'paciente' ? rawForm.obra_social : null,
     };
+    // se carga la obra social o especialidades nuevas si las hay
+    if (this.tipoUsuario === 'especialista') {
+      console.log('Validando si hay especialidades nuevas para cargar');
+      const especialidadesNuevas = this.especialidadesSeleccionadas().filter(
+        (esp) => !this.especialidadesDisponibles().includes(esp)
+      );
+      for (const especialidad of especialidadesNuevas) {
+        await this.supabase.insertar<EspecialidadInterface>('especialidad', {
+          nombre: especialidad,
+        });
+      }
+    }
+    if (this.tipoUsuario === 'paciente') {
+      console.log('Validando si hay obras sociales nuevas para cargar');
+      const obraSocialFormateada = this.normalizarTexto(rawForm.obra_social);
+      if (!this.listadoObrasSociales().includes(obraSocialFormateada)) {
+        await this.supabase.insertar<ObraSocialInterface>('obra_social', {
+          nombre: obraSocialFormateada,
+        });
+      }
+    }
+
+    // se cargan la o las imagenes
     const resultadoSubida = await this.subirImagenes(usuarioNuevo.dni);
-    
-    if(!resultadoSubida.exito)
-    {
-      this.errorSupabase  = 'No se pudieron subir las imagenes';
+
+    if (!resultadoSubida.exito) {
+      this.errorSupabase = 'No se pudieron subir las imagenes';
       return;
     }
     usuarioNuevo.imagen_uno = resultadoSubida.urls.uno!;
     usuarioNuevo.imagen_dos = this.tipoUsuario === 'paciente' ? resultadoSubida.urls.dos! : null;
-    console.log(usuarioNuevo);
 
+    // se empieza a registrar el usuario
     console.log('se subieron las imagenes, pasando a crear el user');
     this.authService
-      .register(usuarioNuevo.correo, usuarioNuevo.nombre + ' ' + usuarioNuevo.apellido, rawForm.contrasena, resultadoSubida.urls.uno!, usuarioNuevo.tipo)
+      .register(
+        usuarioNuevo.correo,
+        usuarioNuevo.nombre + ' ' + usuarioNuevo.apellido,
+        rawForm.contrasena,
+        resultadoSubida.urls.uno!,
+        usuarioNuevo.tipo
+      )
       .subscribe((result) => {
-        console.log(result.data);
-        console.log(result.error);
         console.log(result.error?.message);
-        usuarioNuevo.uuid  = result.data.user?.id!;
+        usuarioNuevo.uuid = result.data.user?.id!;
         if (result.error) {
           switch (result.error.message) {
             case 'user_already_exists':
@@ -180,17 +213,44 @@ export class FormRegistroComponent {
               this.errorSupabase = 'Error al registrarse';
           }
         } else {
+          console.log('Se registro el usuario, pasando a insertar los datos en tabla.');
           this.supabase
-          .insertar<UsuarioBaseInterface>('usuarios', usuarioNuevo)
-          .then((res) => {
-            console.log('Usuario guardado en Supabase:', res);
-            this.habilitado ? this.tipoUsuario='administrador' : this.router.navigateByUrl('/home');
-          })
-          .catch((err) => {
-            this.errorSupabase = 'Error al guardar en la base de datos';
-          });
+            .insertar<UsuarioBaseInterface>('usuarios', usuarioNuevo)
+            .then((res) => {
+              console.log('Usuario guardado en Supabase');
+              if (this.tipoUsuario === 'paciente') {
+                this.supabase
+                  .buscarUno<ObraSocialInterface>('obra_social', 'nombre', this.normalizarTexto(rawForm.obra_social))
+                  .then((res) => {
+                    if (!res?.id) return;
+                    this.supabase.insertar<UsuarioObraSocialInterface>('usuarios_obra_social', { usuario_id: usuarioNuevo.uuid, obra_social_id: res!.id })
+                  })
+                  .catch((err) => {
+                    console.error('Error al obtener obras sociales:', err);
+                  });
+              }
+              if (this.tipoUsuario === 'especialista') {
+                for (const especialidad of this.especialidadesSeleccionadas()) {
+                  this.supabase
+                    .buscarUno<EspecialidadInterface>('especialidad', 'nombre', especialidad)
+                    .then((res) => {
+                      if (!res?.id) return;
+                      this.supabase.insertar<UsuariosEspecialidadInterface>('usuarios_especialidad', { usuario_id: usuarioNuevo.uuid, especialidad_id: res?.id })
+                    })
+                    .catch((err) => {
+                      console.error('Error al obtener obras sociales:', err);
+                    });
+                }
+              }
+
+              this.habilitado
+                ? (this.tipoUsuario = 'administrador')
+                : this.router.navigateByUrl('/home');
+            })
+            .catch((err) => {
+              this.errorSupabase = 'Error al guardar en la base de datos';
+            });
           console.log('Usuario registrado correctamente');
-        
         }
       });
   }
@@ -213,7 +273,10 @@ export class FormRegistroComponent {
   agregarEspecialidad(event: MatChipInputEvent) {
     const value = (event.value || '').trim();
     if (value && !this.especialidadesSeleccionadas().includes(value)) {
-      this.especialidadesSeleccionadas.update((esp) => [...esp, value]);
+      this.especialidadesSeleccionadas.update((esp) => [
+        ...esp,
+        this.normalizarTexto(value),
+      ]);
     }
     this.especialidadInput.set('');
     event.chipInput?.clear();
@@ -222,7 +285,10 @@ export class FormRegistroComponent {
   seleccionarEspecialidad(event: MatAutocompleteSelectedEvent) {
     const value = event.option.viewValue;
     if (!this.especialidadesSeleccionadas().includes(value)) {
-      this.especialidadesSeleccionadas.update((esp) => [...esp, value]);
+      this.especialidadesSeleccionadas.update((esp) => [
+        ...esp,
+        this.normalizarTexto(value),
+      ]);
     }
     this.especialidadInput.set('');
     event.option.deselect();
@@ -238,19 +304,23 @@ export class FormRegistroComponent {
     dni: string
   ): Promise<{ exito: boolean; urls: { uno?: string; dos?: string } }> {
     try {
+      console.log('Subiendo la/las imagenes:');
       const imagenUno = this.imagenes[1]();
       const imagenDos = this.imagenes[2]();
+      const numeroRandom = Math.floor(100000 + Math.random() * 900000);
 
       const urlUno = await this.supabase.guardarImagen(
         imagenUno!,
-        `${dni}_imagen_uno`
+        `${dni}_${numeroRandom}_imagen_uno`
       );
+      console.log('Imagen uno guardada:', urlUno);
 
       if (this.tipoUsuario === 'paciente') {
         const urlDos = await this.supabase.guardarImagen(
           imagenDos!,
-          `${dni}_imagen_dos`
+          `${dni}_${numeroRandom}_imagen_dos`
         );
+        console.log('Imagen dos guardada:', urlDos);
         return {
           exito: true,
           urls: { uno: urlUno as string, dos: urlDos as string },
@@ -262,5 +332,12 @@ export class FormRegistroComponent {
       console.error('Error al subir al storage:', error);
       return { exito: false, urls: {} };
     }
+  }
+
+  normalizarTexto(texto: string): string {
+    return texto
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toUpperCase();
   }
 }

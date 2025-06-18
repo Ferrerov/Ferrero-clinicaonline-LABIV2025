@@ -18,7 +18,7 @@ export class AppComponent {
   supabase = inject(SupabaseDbService);
   async ngOnInit(): Promise<void> {
     this.authService.supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log('Auth:', event, session);
+      //console.log('Auth:', event, session);
       if (event === 'SIGNED_IN') {
         const usuario = await this.supabase.buscarUno<UsuarioBaseInterface>(
           'usuarios',
@@ -44,7 +44,7 @@ export class AppComponent {
       } else if (event === 'SIGNED_OUT') {
         this.authService.currentUser.set(null);
       }
-      console.log(this.authService.currentUser());
+      //console.log(this.authService.currentUser());
     });
   }
 }

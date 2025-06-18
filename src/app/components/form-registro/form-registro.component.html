@@ -8,11 +8,8 @@
               <mat-label>Nombre</mat-label>
               <input matInput placeholder="Valentin" formControlName="nombre" />
               <mat-icon matSuffix>person</mat-icon>
-              @if (form.controls.correo.hasError('email') &&
-              !form.controls.correo.hasError('required')) {
-              <mat-error>Ingrese un correo valido</mat-error>
-              } @if (form.controls.correo.hasError('required')) {
-              <mat-error>El correo es requerido</mat-error>
+              @if (form.controls.nombre.hasError('required')) {
+              <mat-error>El nombre es requerido</mat-error>
               }
             </mat-form-field>
             <mat-form-field appearance="outline">
@@ -23,11 +20,8 @@
                 formControlName="apellido"
               />
               <mat-icon matSuffix>person</mat-icon>
-              @if (form.controls.correo.hasError('email') &&
-              !form.controls.correo.hasError('required')) {
-              <mat-error>Ingrese un correo valido</mat-error>
-              } @if (form.controls.correo.hasError('required')) {
-              <mat-error>El correo es requerido</mat-error>
+              @if (form.controls.apellido.hasError('required')) {
+              <mat-error>El apellido es requerido</mat-error>
               }
             </mat-form-field>
             <mat-form-field class="campo campo-edad" appearance="outline">

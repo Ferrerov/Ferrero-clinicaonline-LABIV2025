@@ -16,15 +16,9 @@
           (click)="cambiarSeleccion('especialista')"
         >
           <div class="imagen"></div>
-          <div class="pie">
-            <h2>ESPECIALISTA</h2>
-          </div>
         </div>
         <div class="caja paciente" (click)="cambiarSeleccion('paciente')">
           <div class="imagen"></div>
-          <div class="pie">
-            <h2>PACIENTE</h2>
-          </div>
         </div>
         @if(authService.currentUser()?.tipo === 'administrador'){
         <div
@@ -32,9 +26,6 @@
           (click)="cambiarSeleccion('administrador')"
         >
           <div class="imagen"></div>
-          <div class="pie">
-            <h2>ADMINISTRADOR</h2>
-          </div>
         </div>
         } } @else {
         <div class="regresar">

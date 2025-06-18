@@ -1,6 +1,6 @@
 import { UsuarioBaseInterface } from "./usuario-base.interface";
 
 export interface EspecialistaInterface extends UsuarioBaseInterface {
-  especialidad: string[];
+  //especialidad: string[];
   tipo: 'especialista';
 }

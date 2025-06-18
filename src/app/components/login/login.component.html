@@ -1,5 +1,55 @@
 <div class="pagina">
   <div class="contenido">
+    <div class="acceso-rapido caja">
+      <div class="encabezado">
+        <h1>USUARIOS PRESTABLECIDOS</h1>
+      </div>
+      <div class="botones">
+        <button mat-button (click)="setCredenciales('enzo')">
+          <img
+            src="https://crhmhrazcvpkqjxorqfl.supabase.co/storage/v1/object/public/assets/usuarios/30543233_imagen_uno.jpg"
+            alt=""
+          />
+          <h4>PACIENTE</h4>
+        </button>
+        <button mat-button (click)="setCredenciales('ramon')">
+          <img
+            src="https://crhmhrazcvpkqjxorqfl.supabase.co/storage/v1/object/public/assets/usuarios/16234592_imagen_uno.png"
+            alt=""
+          />
+          <h4>PACIENTE</h4>
+        </button>
+        <button mat-button (click)="setCredenciales('larrondo')">
+          <img
+            src="https://crhmhrazcvpkqjxorqfl.supabase.co/storage/v1/object/public/assets/usuarios/37423232_imagen_uno.jpg"
+            alt=""
+          />
+          <h4>PACIENTE</h4>
+        </button>
+
+        <button mat-button (click)="setCredenciales('sandra')">
+          <img
+            src="https://crhmhrazcvpkqjxorqfl.supabase.co/storage/v1/object/public/assets/usuarios/17773234_imagen_uno.jpg"
+            alt=""
+          />
+          <h4>ESPECIALISTA</h4>
+        </button>
+        <button mat-button (click)="setCredenciales('enrique')">
+          <img
+            src="https://crhmhrazcvpkqjxorqfl.supabase.co/storage/v1/object/public/assets/usuarios/18234888_imagen_uno.jpg"
+            alt=""
+          />
+          <h4>ESPECIALISTA</h4>
+        </button>
+        <button mat-button (click)="setCredenciales('brito')">
+          <img
+            src="https://crhmhrazcvpkqjxorqfl.supabase.co/storage/v1/object/public/assets/usuarios/26234233_imagen_uno.jpeg"
+            alt=""
+          />
+          <h4>ADMINISTRADOR</h4>
+        </button>
+      </div>
+    </div>
     <div class="principal caja">
       <h1>Inicar Sesión</h1>
       <div class="formulario">
@@ -56,29 +106,6 @@
           <mat-error id="errorSupabase">{{ errorSupabase }}</mat-error>
           }
         </form>
-      </div>
-    </div>
-    <div class="acceso-rapido caja">
-      <div class="encabezado">
-        <h1>USUARIOS PRESTABLECIDOS</h1>
-        <p>
-          Si no posee un usuario registrado, puede inciar sesión con un usuario
-          pre-registrado
-        </p>
-      </div>
-      <div class="botones">
-        <button mat-fab extended (click)="setCredenciales('enzo')">
-          <mat-icon>face</mat-icon>
-          Enzo
-        </button>
-        <button mat-fab extended (click)="setCredenciales('sandra')">
-          <mat-icon>face_3</mat-icon>
-          Sandra
-        </button>
-        <button mat-fab extended (click)="setCredenciales('ramon')">
-          <mat-icon>face_5</mat-icon>
-          Ramon
-        </button>
       </div>
     </div>
   </div>

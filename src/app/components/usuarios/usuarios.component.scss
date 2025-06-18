@@ -33,6 +33,8 @@
                 button{
                     background-color: #CBA368;
                     color: #EAF4F8;
+                    border-radius: 5px;
+                    height: 100%;
                 }
             }
             .seleccion{
@@ -81,6 +83,10 @@
                     color: #F7F7F2;
                     border-color: #CBA368;
                     text-align: center;
+                    button{
+                        border-radius: 5px;
+                        width: 90%;
+                    }
                     .habilitado{
                         background-color: #a82e25;;
                         color: #EAF4F8;
@@ -93,6 +99,8 @@
                 .imagen{
                         padding: 1%;
                         img{
+                            height: 80px;
+                            width: 80px;
                         max-width: 80px;
                         max-height: 80px;
                         border-radius: 50%;

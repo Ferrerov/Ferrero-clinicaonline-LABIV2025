@@ -37,6 +37,7 @@ export class SupabaseDbService {
   }
 
   async insertar<T>(tabla: string, objeto: T): Promise<T> {
+    console.log(`Insertando el siguiente objeto en la tabla ${tabla}:`, objeto);
     const { data, error } = await this.supabase
       .from(tabla)
       .insert(objeto)
@@ -75,6 +76,7 @@ export class SupabaseDbService {
     columna: string,
     valor: string
   ): Promise<T | null> {
+    console.log(`Se esta buscando el valor '${valor}' en la columna '${columna}' de la tabla '${tabla}'`);
     const { data, error } = await this.supabase
       .from(tabla)
       .select('*')
@@ -88,4 +90,17 @@ export class SupabaseDbService {
 
     return data as T;
   }
+
+  async buscarTodos<T>(tabla: string): Promise<T[]> {
+  const { data, error } = await this.supabase
+    .from(tabla)
+    .select('*');
+
+  if (error) {
+    console.error(`Error al obtener todos los datos de ${tabla}:`, error);
+    return [];
+  }
+
+  return data as T[];
+}
 }

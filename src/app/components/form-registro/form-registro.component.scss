@@ -18,12 +18,16 @@
           width: 100%;
           height: 100%;
           display: flex;
+          justify-content: center;
+          align-items: center;
           .columna {
             height: 100%;
-            width: 50%;
+            width: 30%;
             padding: 1%;
             display: flex;
             flex-direction: column;
+            margin-left: 5%;
+            margin-right: 5%;
             mat-label {
               color: #eaf4f8;
             }
@@ -33,6 +37,7 @@
               --mdc-outlined-text-field-focus-outline-color: #cba368;
               --mdc-outlined-text-field-focus-label-text-color: #cba368;
               --mdc-outlined-text-field-hover-outline-color: #cba368;
+              margin-top: .5%;
               input {
                 color: #eaf4f8;
               }
@@ -41,6 +46,13 @@
                 -webkit-appearance: none;
                 margin: 0;
               }
+            }
+            mat-error{
+              width: 100%;
+              justify-content: start;
+              align-items: start;
+              display: flex;
+              margin-top: .3%;
             }
           }
           mat-chip-grid {
@@ -56,8 +68,11 @@
           }
           .derecha {
             //background-color: aqua;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
             .imagenes {
-              height: 50%;
+              height: 40%;
               width: 100%;
               display: flex;
               justify-content: center;
@@ -117,7 +132,8 @@
             mat-error{
               width: 100%;
               text-align: center;
-              padding-top: 3%;
+              //padding-top: .5%;
+              align-items: start;
             }
           }
         }

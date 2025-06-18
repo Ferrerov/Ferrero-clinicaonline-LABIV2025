@@ -48,7 +48,7 @@ export class LoginComponent {
 
   async onSubmit(): Promise<void> {
     const rawForm = this.form.getRawValue();
-    /*const usuario = await this.supabase.buscarUno<UsuarioBaseInterface>(
+    const usuario = await this.supabase.buscarUno<UsuarioBaseInterface>(
       'usuarios',
       'correo',
       rawForm.correo
@@ -61,7 +61,7 @@ export class LoginComponent {
     if (!usuario.habilitado) {
       this.errorSupabase = 'Tu cuenta no fue habilitada por un administrador';
       return;
-    } else {*/
+    } else {
       this.authService
         .login(rawForm.correo, rawForm.contrasena)
         .subscribe((result) => {
@@ -80,7 +80,7 @@ export class LoginComponent {
             this.router.navigateByUrl('/home');
           }
         });
-    //}
+    }
   }
 
   setCredenciales(usuario: string) {
@@ -88,19 +88,37 @@ export class LoginComponent {
       case 'enzo':
         this.form.setValue({
           correo: 'joukefribreupi-4252@yopmail.com',
-          contrasena: 'WwK*Qw96n4bh39pY',
+          contrasena: '12345678',
         });
         break;
       case 'sandra':
         this.form.setValue({
           correo: 'humouyifoipre-7575@yopmail.com',
-          contrasena: 'ZrZdC3qrkX%9xGd6',
+          contrasena: '12345678',
+        });
+        break;
+      case 'ramon':
+        this.form.setValue({
+          correo: 'geibreipraneddoi-2968@yopmail.com',
+          contrasena: 'Vdi%HrHREA5kx5M2Y',
+        });
+        break;
+      case 'brito':
+        this.form.setValue({
+          correo: 'connocavauttei-5225@yopmail.com',
+          contrasena: '12345678',
+        });
+        break;
+      case 'enrique':
+        this.form.setValue({
+          correo: 'pujibumimmi-5289@yopmail.com',
+          contrasena: '12345678',
         });
         break;
       default:
         this.form.setValue({
-          correo: 'geibreipraneddoi-2968@yopmail.com',
-          contrasena: 'Vdi%HrHREA5kx5M2Y',
+          correo: 'yeinefraddeuzu-8688@yopmail.com',
+          contrasena: '12345678',
         });
         break;
     }

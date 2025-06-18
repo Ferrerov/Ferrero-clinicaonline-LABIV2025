@@ -87,11 +87,15 @@ export class SupabaseDbService {
       console.warn(`Error buscando en ${tabla}:`, error);
       return null;
     }
+    else{
+      console.log(`Se encontro el siguiente objeto:`, data as T);
+    }
 
     return data as T;
   }
 
   async buscarTodos<T>(tabla: string): Promise<T[]> {
+  console.log(`Se esta buscando todos los valores de la tabla '${tabla}'`);
   const { data, error } = await this.supabase
     .from(tabla)
     .select('*');

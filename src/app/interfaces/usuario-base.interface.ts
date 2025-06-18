@@ -1,4 +1,5 @@
 export interface UsuarioBaseInterface {
+  uuid?:string,
   nombre: string;
   apellido: string;
   edad: number;
@@ -7,4 +8,5 @@ export interface UsuarioBaseInterface {
   usuario: string;
   habilitado: boolean;
   imagen_uno: string;
+  imagen_dos: string |  null;
 }

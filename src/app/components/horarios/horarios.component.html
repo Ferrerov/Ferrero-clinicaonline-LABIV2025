@@ -1,0 +1,96 @@
+<div class="pagina">
+  <div class="contenido">
+    <div class="especialidades">
+      <div class="titulo">Seleccione la especialidad</div>
+      <div class="botones">
+        @for (esp of especialidades; track $index) {
+        <button mat-flat-button (click)="seleccionarEsp(esp)">
+          {{ esp.nombre }}
+        </button>
+        }
+      </div>
+    </div>
+    <div class="informacion">
+      @if(espSeleccionada){
+      <div class="encabezado">
+        <h2>Seleccione los horarios para {{ espSeleccionada.nombre }}</h2>
+      </div>
+      
+      <div class="formulario">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="dias">
+        <mat-button-toggle-group formControlName="dia">
+          @for(dia of dias; track $index) {
+          <mat-button-toggle value="bold" (click)="seleccionarDia(dia)">{{
+            dia
+          }}</mat-button-toggle>
+          }
+        </mat-button-toggle-group>
+      </div>
+      @if(dia_seleccionado){
+          <div class="fila hora_desde">
+            <span>Apertura de la Clinica: {{hora_desde}} </span>
+            <mat-form-field appearance="outline">
+              <mat-label>Hora de inicio</mat-label>
+              <input
+                matInput
+                formControlName="hora_desde"
+                [matTimepicker]="picker1"
+                matTimepickerMin="{{ hora_desde }}"
+                matTimepickerMax="{{ hora_hasta }}"
+              />
+              <mat-timepicker-toggle matIconSuffix [for]="picker1" />
+              <mat-timepicker #picker1 />
+
+              @if (form.controls.hora_desde.errors?.['matTimepickerParse']) {
+              <mat-error>El horario no es valido</mat-error>
+              } @if (form.controls.hora_desde.errors?.['matTimepickerMin']) {
+              <mat-error>El horario es demasiado temprano</mat-error>
+              } @if (form.controls.hora_desde.errors?.['matTimepickerMax']) {
+              <mat-error>El horario es demasiado tarde</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="fila hora_hasta">
+            <span>Cierre de la Clinica: {{hora_hasta}} </span>
+            <mat-form-field appearance="outline">
+              <mat-label>Hora de fin</mat-label>
+              <input
+                matInput
+                formControlName="hora_hasta"
+                [matTimepicker]="picker2"
+                matTimepickerMin="{{ hora_desde }}"
+                matTimepickerMax="{{ hora_hasta }}"
+              />
+              <mat-timepicker-toggle matIconSuffix [for]="picker2" />
+              <mat-timepicker #picker2 />
+
+              @if (form.controls.hora_hasta.errors?.['matTimepickerParse']) {
+              <mat-error>El horario no es valido</mat-error>
+              } @if (form.controls.hora_hasta.errors?.['matTimepickerMin']) {
+              <mat-error>El horario es demasiado temprano</mat-error>
+              } @if (form.controls.hora_hasta.errors?.['matTimepickerMax']) {
+              <mat-error>El horario es demasiado tarde</mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="boton">
+              <button class="button" type="submit" mat-flat-button [disabled]="form.invalid">
+                Registrarse
+              </button>
+            </div>
+            } @else {
+      <div class="dia-pendiente">
+        <h2>Seleccione un dia para ver los horarios</h2>
+      </div>
+      }
+        </form>
+      </div>
+       } @else {
+      <div class="pendiente">
+        <h1>Seleccione una especialidad del menu para ver los horarios</h1>
+      </div>
+      }
+    </div>
+  </div>
+</div>

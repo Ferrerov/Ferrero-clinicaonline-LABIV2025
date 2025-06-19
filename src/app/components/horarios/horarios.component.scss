@@ -1,0 +1,151 @@
+.pagina {
+  height: 100%;
+  width: 100%;
+  .contenido {
+    height: 100%;
+    width: 100%;
+    //background-color: #112138;
+    border-radius: 5px;
+    display: flex;
+    max-height: 450px;
+    .especialidades {
+      //background-color: #112138;
+      height: 100%;
+      width: 29%;
+      margin-right: 1%;
+      .titulo {
+        height: 10%;
+        background-color: #cba368;
+        margin-bottom: 1%;
+        padding: 1%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #eaf4f8;
+        font-size: larger;
+        border-radius: 5px;
+      }
+      .botones {
+        background-color: #112138;
+        border-radius: 5px;
+        padding: 1%;
+        height: 89%;
+        display: flex;
+        flex-direction: column;
+        button {
+          margin: 1%;
+          border-radius: 5px;
+          background-color: #061630;
+        }
+        :focus {
+          background-color: #cba368;
+        }
+      }
+    }
+    .informacion {
+      background-color: #112138;
+      height: 100%;
+      width: 70%;
+      border-radius: 5px;
+
+      .pendiente {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 5%;
+      }
+      .encabezado {
+        height: 15%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+      }
+      .formulario {
+        height: 60%;
+        width: 100%;
+        padding: 1.5%;
+        form{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+        .dias {
+        height: 15%;
+        width: 100%;
+        display: flex;
+        gap: 1%;
+        padding-left: 1%;
+        padding-right: 1%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        mat-button-toggle-group {
+          --mat-standard-button-toggle-shape: 5px;
+          --mat-standard-button-toggle-text-color: #eaf4f8;
+          --mat-standard-button-toggle-background-color: #061630;
+          --mat-standard-button-toggle-selected-state-background-color: #cba368;
+          --mat-standard-button-toggle-divider-color: #112138;
+          --mat-standard-button-toggle-selected-state-text-color: #112138;
+          mat-button-toggle {
+            display: flex;
+            width: 130px;
+          }
+        }
+      }
+      mat-form-field {
+              //width: 40%;
+              --mdc-outlined-text-field-caret-color: #cba368;
+              --mdc-outlined-text-field-focus-outline-color: #cba368;
+              --mdc-outlined-text-field-focus-label-text-color: #cba368;
+              --mdc-outlined-text-field-hover-outline-color: #cba368;
+              margin-top: .5%;
+              input {
+                color: #eaf4f8;
+              }
+              input::-webkit-outer-spin-button,
+              input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+              }
+            }
+        .fila{
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            margin-top: 1%;
+            span{
+                margin-bottom: 2%;
+            }
+            mat-form-field{
+                width: 100%;
+            }
+        }
+        .boton{
+            width: 50%;
+            margin-top: .5%;
+            button{
+                width: 100%;
+                border-radius: 5px;
+                background-color: #cba368;
+            }
+        }
+        .dia-pendiente{
+        height: 60%;
+        width: 100%;
+        padding: 5%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+        }
+
+      }
+    }
+  }
+}

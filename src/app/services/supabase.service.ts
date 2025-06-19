@@ -76,7 +76,9 @@ export class SupabaseDbService {
     columna: string,
     valor: string
   ): Promise<T | null> {
-    console.log(`Se esta buscando el valor '${valor}' en la columna '${columna}' de la tabla '${tabla}'`);
+    console.log(
+      `Se esta buscando el valor '${valor}' en la columna '${columna}' de la tabla '${tabla}'`
+    );
     const { data, error } = await this.supabase
       .from(tabla)
       .select('*')
@@ -86,8 +88,7 @@ export class SupabaseDbService {
     if (error) {
       console.warn(`Error buscando en ${tabla}:`, error);
       return null;
-    }
-    else{
+    } else {
       console.log(`Se encontro el siguiente objeto:`, data as T);
     }
 
@@ -95,16 +96,57 @@ export class SupabaseDbService {
   }
 
   async buscarTodos<T>(tabla: string): Promise<T[]> {
-  console.log(`Se esta buscando todos los valores de la tabla '${tabla}'`);
-  const { data, error } = await this.supabase
-    .from(tabla)
-    .select('*');
+    console.log(`Se esta buscando todos los valores de la tabla '${tabla}'`);
+    const { data, error } = await this.supabase.from(tabla).select('*');
 
-  if (error) {
-    console.error(`Error al obtener todos los datos de ${tabla}:`, error);
-    return [];
+    if (error) {
+      console.error(`Error al obtener todos los datos de ${tabla}:`, error);
+      return [];
+    }
+
+    return data as T[];
+  }
+  async obtenerRelacionados<T = any>(
+    tablaRelacion: string, // Ej: 'usuario_especialidad'
+    campoReferencia: string, // Ej: 'usuario_uuid'
+    valorReferencia: string, // Ej: uuid del usuario
+    tablaRelacionada: string, // Ej: 'especialidad'
+    campoResultado?: string, // Ej: 'nombre' o '*' si querés todo
+  ): Promise<T[]> {
+    console.log(`Obteniendo '${campoResultado}' de la tabla '${tablaRelacion}',
+       a partir del valor '${valorReferencia}'. Se utiliza la tabla de relacion '${tablaRelacion}'`);
+    const { data, error } = await this.supabase
+      .from(tablaRelacion)
+      .select(`${tablaRelacionada} (${campoResultado})`)
+      .eq(campoReferencia, valorReferencia);
+
+    if (error) {
+      console.error(`Error al obtener datos de ${tablaRelacion}:`, error);
+      return [];
+    }
+
+    return data.map((e: any) => e[tablaRelacionada]);
   }
 
-  return data as T[];
+  async buscarCampoPorCondiciones<T>(
+  tabla: string,
+  condiciones: Partial<T>,
+  campoResultado: keyof T
+): Promise<T[keyof T] | null> {
+  console.log(`Buscando el campo '${String(campoResultado)}' en la tabla '${tabla}' con condiciones:`, condiciones);
+
+  const { data, error } = await this.supabase
+    .from(tabla)
+    .select(`${String(campoResultado)}`)
+    .match(condiciones)
+    .single();
+
+  if (error) {
+    console.warn(`Error buscando en ${tabla} con condiciones`, condiciones, error);
+    return null;
+  }
+
+  return (data as T)?.[campoResultado] ?? null;
 }
+
 }

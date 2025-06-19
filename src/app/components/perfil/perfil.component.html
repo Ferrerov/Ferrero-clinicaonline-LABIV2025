@@ -1,0 +1,111 @@
+<div class="pagina">
+  <div class="contenido">
+    <div class="caja botones">
+      <button
+        mat-fab
+        extended
+        id="datos"
+        [ngClass]="{ seleccionado: botonSeleccionado === 'datos' }"
+        (click)="botonSeleccionado = 'datos'"
+      >
+        <mat-icon>person</mat-icon>
+        Mis Datos
+      </button>
+      @if(authService.currentUser()?.tipo === 'especialista'){
+      <button
+        mat-fab
+        extended
+        id="horarios"
+        [ngClass]="{ seleccionado: botonSeleccionado === 'horarios' }"
+        (click)="botonSeleccionado = 'horarios'"
+      >
+        <mat-icon>schedule</mat-icon>
+        Mis Horarios
+      </button>
+      }
+    </div>
+    <div class="caja perfil">
+      @if (botonSeleccionado === 'datos') {
+      <div class="datos">
+        <div class="imagenes">
+          <img src="{{ usuario?.imagen_uno }}" />
+          @if (authService.currentUser()?.tipo === 'paciente') {
+          <img src="{{ usuario?.imagen_dos }}" />
+          }
+        </div>
+        <div class="informacion">
+          <div
+            class="listado"
+            [ngClass]="{
+              especialista: authService.currentUser()?.tipo === 'especialista'
+            }"
+          >
+            <mat-list>
+              <mat-list-item>
+                <mat-icon matListItemIcon>person</mat-icon>
+                <div matListItemTitle>{{ usuario?.nombre }}</div>
+                <div matListItemLine>NOMBRE</div>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item>
+                <mat-icon matListItemIcon>person</mat-icon>
+                <div matListItemTitle>{{ usuario?.apellido }}</div>
+                <div matListItemLine>APELLIDO</div>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item>
+                <mat-icon matListItemIcon>calendar_month</mat-icon>
+                <div matListItemTitle>{{ usuario?.edad }}</div>
+                <div matListItemLine>EDAD</div>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item>
+                <mat-icon matListItemIcon>badge</mat-icon>
+                <div matListItemTitle>{{ usuario?.dni }}</div>
+                <div matListItemLine>DNI</div>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item>
+                <mat-icon matListItemIcon>mail</mat-icon>
+                <div matListItemTitle>{{ usuario?.correo }}</div>
+                <div matListItemLine>CORREO</div>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+              <mat-list-item>
+                <mat-icon matListItemIcon>alternate_email</mat-icon>
+                <div matListItemTitle>{{ usuario?.usuario }}</div>
+                <div matListItemLine>USUARIO</div>
+              </mat-list-item>
+              @if(authService.currentUser()?.tipo === 'paciente'){
+              <mat-divider></mat-divider>
+              <mat-list-item>
+                <mat-icon matListItemIcon>medical_information</mat-icon>
+                <div matListItemTitle>{{ usuario?.usuario }}</div>
+                <div matListItemLine>OBRA SOCIAL</div>
+              </mat-list-item>
+              }
+            </mat-list>
+          </div>
+          <div class="especialidades">
+            <mat-list>
+              <div mat-subheader>ESPECIALIDADES</div>
+              @for (esp of especialidades; track $index) {
+              <mat-list-item>
+                <mat-icon matListItemIcon>medical_information</mat-icon>
+                <div matListItemTitle>{{ esp.nombre }}</div>
+                <div matListItemLine>ESPECIALIZACION</div>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+              }
+            </mat-list>
+          </div>
+        </div>
+      </div>
+      } @else {
+      <div class="horarios">
+        <app-horarios [especialidades]="especialidades" [usuario]="usuario"></app-horarios>
+      </div>
+      }
+    </div>
+  </div>
+</div>

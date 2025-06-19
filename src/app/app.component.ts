@@ -14,7 +14,7 @@ import { UsuarioBaseInterface } from './interfaces/usuario-base.interface';
 })
 export class AppComponent {
   title = 'clinicaonline';
-  authService = inject(AuthService);
+  /*authService = inject(AuthService);
   supabase = inject(SupabaseDbService);
   async ngOnInit(): Promise<void> {
     this.authService.supabase.auth.onAuthStateChange(async (event, session) => {
@@ -46,5 +46,5 @@ export class AppComponent {
       }
       //console.log(this.authService.currentUser());
     });
-  }
+  }*/
 }

@@ -1,0 +1,119 @@
+.pagina {
+  height: 100%;
+  width: 100%;
+  .contenido {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .caja {
+      width: 90%;
+      margin: 0.5%;
+    }
+    .botones {
+      height: 10%;
+      display: flex;
+      //padding: 0.3%;
+      justify-content: center;
+      align-items: center;
+      gap: 1%;
+      button {
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+        background-color: #112138;
+        color: #eaf4f8;
+        flex: 1;
+      }
+      #datos {
+        //margin-right: 0.5%;
+      }
+      #horarios {
+        //margin-left: 0.5%;
+      }
+      .seleccionado {
+        background-color: #cba368;
+      }
+    }
+    .perfil {
+      //background-color: #112138;
+      height: 80%;
+      border-radius: 5px;
+      .datos {
+        height: 100%;
+        display: flex;
+        max-height: 440px;
+        .imagenes {
+          width: 20%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          background-color: #112138;
+          margin-right: 0.5%;
+          border-radius: 5px;
+          padding: 0.5%;
+          img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            object-position: top;
+            border-radius: 50%;
+            margin: auto;
+            border-style: solid;
+            border-width: 2px;
+            border-color: #cba368;
+          }
+        }
+        .informacion {
+          display: flex;
+          width: 79%;
+          //flex-direction: column;
+          margin-left: 0.5%;
+          background-color: #112138;
+          border-radius: 5px;
+          padding: 2%;
+          justify-content: center;
+          align-items: center;
+          --mdc-list-list-item-label-text-color: #eaf4f8;
+          --mdc-list-list-item-hover-label-text-color: #cba368;
+          --mdc-list-list-item-leading-icon-size: 24px;
+          --mdc-list-list-item-label-text-color: #eaf4f8;
+          --mdc-list-list-item-supporting-text-color: #eaf4f8;
+          --mdc-list-list-item-leading-icon-color: #cba368;
+          --mdc-list-list-item-hover-label-text-color: #cba368;
+          --mdc-list-list-item-hover-leading-icon-color: #cba368;
+          .listado {
+            width: 100%;
+            mat-list {
+              width: 80%;
+              mat-list-item {
+                width: 100%;
+                max-height: 55px;
+              }
+            }
+          }
+          .especialista {
+            width: 40%;
+          }
+          .especialidades {
+            width: 40%;
+          }
+        }
+      }
+      .horarios {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        app-horarios{
+          position:  absolute;
+          height: 100%;
+          width: 100%;
+        }    
+      }
+    }
+  }
+}

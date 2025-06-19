@@ -1,8 +1,8 @@
 export enum Dias {
-    'LUNES',
-    'MARTES',
-    'MIERCOLES',
-    'JUEVES',
-    'VIERNES',
-    'SABADO'
+  LUNES = 'LUNES',
+  MARTES = 'MARTES',
+  MIERCOLES = 'MIERCOLES',
+  JUEVES = 'JUEVES',
+  VIERNES = 'VIERNES',
+  SABADO = 'SABADO'
 }

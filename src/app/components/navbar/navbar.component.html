@@ -19,17 +19,20 @@
         <li class="nav-item">
           <a class="nav-link" aria-current="page" href="/home">Home</a>
         </li>
-        @if(authService.currentUser()?.tipo  === 'administrador'){
+        @if(authService.currentUser()?.tipo === 'administrador'){
         <li class="nav-item">
           <a class="nav-link" href="/usuarios">Usuarios</a>
         </li>
-        }
-        @if(!authService.currentUser()){
+        } @if(!authService.currentUser()){
         <li class="nav-item">
           <a class="nav-link" href="/registro">Registro</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/login">Iniciar Sesion</a>
+        </li>
+        } @if(authService.currentUser()){
+        <li class="nav-item">
+          <a class="nav-link" href="/perfil">Mi Perfil</a>
         </li>
         }
       </ul>
@@ -39,9 +42,11 @@
           <a (click)="authService.logout()">Cerrar Sesion</a>
         </li>
         <li class="nav-item d-flex" id="usuario">
-          <img src="{{authService.currentUser()?.imagenPerfil}}" alt="">
+          <img src="{{ authService.currentUser()?.imagenPerfil }}" alt="" />
           <div class="texto">
-            <span class="usuario">{{ authService.currentUser()?.username }}</span>
+            <span class="usuario">{{
+              authService.currentUser()?.username
+            }}</span>
             <span class="tipo">{{ authService.currentUser()?.tipo }}</span>
           </div>
         </li>

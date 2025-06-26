@@ -33,7 +33,7 @@
                 }
               </mat-form-field>
               <mat-form-field appearance="outline">
-                <mat-label>Peso</mat-label>
+                <mat-label>Temperatura</mat-label>
                 <input
                   matInput
                   placeholder="36"
@@ -46,7 +46,7 @@
                 }
               </mat-form-field>
               <mat-form-field appearance="outline">
-                <mat-label>Peso</mat-label>
+                <mat-label>Presion</mat-label>
                 <input
                   matInput
                   placeholder="36"
@@ -55,7 +55,7 @@
                 />
                 <mat-icon matSuffix>height</mat-icon>
                 @if (form.get('presion')?.hasError('required')) {
-                <mat-error>La temperatura es requerida</mat-error>
+                <mat-error>La presion es requerida</mat-error>
                 }
               </mat-form-field>
             </div>

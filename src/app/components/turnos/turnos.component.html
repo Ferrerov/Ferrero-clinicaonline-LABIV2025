@@ -22,11 +22,11 @@
         </button>
         } @if(turnoSeleccionado.estado === 'COMPLETADO'){ @if(comentariosTurno){
         <button mat-flat-button (click)="verComentario()">Ver reseña</button>
-        } @else {
+        }
         <button mat-flat-button (click)="calificarTurno()">
           Calificar atencion
         </button>
-        } } } @else if (authService.currentUser()?.tipo === 'especialista'){
+         } } @else if (authService.currentUser()?.tipo === 'especialista'){
         @if(turnoSeleccionado.estado === 'PENDIENTE'){
         <button mat-flat-button (click)="cancelarTurno()">
           Cancelar Turno

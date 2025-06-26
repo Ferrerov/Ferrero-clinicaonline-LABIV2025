@@ -1,5 +1,34 @@
 <div class="pagina">
   <div class="contenido">
-    <p>Estas en el home</p>
+    <div class="columnas">
+      <div class="columna izq">
+        <button mat-fab extended (click)="cambiarRuta('/misturnos')">
+          <mat-icon>calendar_today</mat-icon>
+          Mis Turnos
+        </button>
+        <button mat-fab extended (click)="cambiarRuta('/perfil')">
+          <mat-icon>account_box</mat-icon>
+          Perfil
+        </button>
+        @if(authService.currentUser()?.tipo === 'administrador'){
+        <button mat-fab extended (click)="cambiarRuta('/usuarios')">
+          <mat-icon>person</mat-icon>
+          Usuarios
+        </button>
+        } @if(authService.currentUser()?.tipo === 'administrador' || authService.currentUser()?.tipo === 'paciente'){
+        <button mat-fab extended (click)="cambiarRuta('/solicitar-turnos')">
+          <mat-icon>add</mat-icon>
+          Solicitar Turno
+        </button>
+        }
+      </div>
+      <div class="columna der">
+        <div class="imagen">
+          <img
+            src="https://crhmhrazcvpkqjxorqfl.supabase.co/storage/v1/object/public/assets//Health%20professional%20team-pana.png"
+          />
+        </div>
+      </div>
+    </div>
   </div>
 </div>

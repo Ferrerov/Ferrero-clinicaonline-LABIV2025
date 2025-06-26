@@ -39,7 +39,7 @@
             }
             .seleccion{
                 height: 100%;
-                width: 70%;
+                width: 55%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -50,18 +50,19 @@
                 }
 
             }
-            .btnRegistro{
+            .funciones{
                 height: 100%;
                 //width: 100%;
-                width: 30%;
+                width: 45%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 padding-left: 5%;
                 padding-right: 5%;
                 margin-left: .5%;
+                gap: 5%;
                 button{
-                    width: 100%;
+                    width: 50%;
                 }
 
             }

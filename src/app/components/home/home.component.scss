@@ -8,8 +8,38 @@
         justify-content: center;
         align-items: center;
         color: #EAF4F8;
-        p{
-            font-size: xx-large;
+        .columnas{
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .columna{
+                width: 50%;
+                height: 100%;
+            }
+            .izq{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 5%;
+                button{
+                    width: 50%;
+                    background-color: #CBA368;
+                    color: #EAF4F8;
+                    border-radius: 5px;
+                }
+            }
+            .der{
+                .imagen{
+                    height: 100%;
+                    width: 100%;
+                    display: flex;
+
+                }
+            }
+
         }
     }
 }

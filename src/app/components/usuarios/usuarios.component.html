@@ -15,12 +15,17 @@
           Administradores
         </button>
       </div>
-      <div class="btnRegistro caja">
+      <div class="funciones caja">
         <button mat-fab extended (click)="cambiarSeleccion(null)">
           <mat-icon>person</mat-icon>
           Registar nuevo
         </button>
+        <button mat-fab extended (click)="descargarExcel()">
+          <mat-icon>download_2</mat-icon>
+          Descargar Excel
+        </button>
       </div>
+      <div></div>
     </div>
     @if(tipoUsuario){
     <div class="tabla">

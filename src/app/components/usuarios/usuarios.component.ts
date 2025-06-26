@@ -11,6 +11,7 @@ import { EspecialistaInterface } from '../../interfaces/especialista.interface';
 import { UsuarioBaseInterface } from '../../interfaces/usuario-base.interface';
 import { MatIcon } from '@angular/material/icon';
 import { RegistroComponent } from '../registro/registro.component';
+import { ExcelService } from '../../services/excel.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -21,7 +22,9 @@ import { RegistroComponent } from '../registro/registro.component';
 })
 export class UsuariosComponent {
   supabase = inject(SupabaseDbService);
+  excelService =  inject(ExcelService);
   resultadosSuscripcion!: Subscription;
+  usuarios: UsuarioBaseInterface[] = [];
   dataSource!: any;
   columnsToDisplay: string[] = [];
   tipoUsuario: 'paciente' | 'especialista' | 'administrador' | null = 'administrador';
@@ -55,6 +58,7 @@ private cargarUsuarios<T extends UsuarioBaseInterface>(
   this.resultadosSuscripcion = this.supabase
     .getUsuariosPorTipo<T>(tipo)
     .subscribe((resultados) => {
+      this.usuarios  = resultados;
       console.log(`Resultados (${tipo}):`, resultados);
       this.dataSource = new MatTableDataSource<T>(resultados);
     });
@@ -84,14 +88,7 @@ private cargarUsuarios<T extends UsuarioBaseInterface>(
 
   toggleHabilitado(element: any): void {
     const nuevoEstado = !element.habilitado;
-    /*this.firestoreService.updateDocById<EspecialistaInterface>('especialistas', element.id, { habilitado: nuevoEstado })
-      .subscribe({
-        next: () => {
-          console.log('El estado de habilitado fue actualizado a ' + nuevoEstado);
-
-        },
-        error: (err) => console.error('Error al actualizar habilitado:', err)
-      });**/
+  
       this.supabase.actualizar<UsuarioBaseInterface>(
       'usuarios',
       { habilitado: nuevoEstado},
@@ -108,4 +105,32 @@ private cargarUsuarios<T extends UsuarioBaseInterface>(
     this.tipoUsuario  = tipo;
     if(tipo) this.cargarDatos();
   }
+
+descargarExcel() {
+  const columnas = this.columnsToDisplay.filter(c => c !== 'imagen_uno');
+  const exportData = this.usuarios.map((u) => {
+    const fila: any = {};
+    columnas.forEach((col) => {
+      fila[this.formatHeader(col)] = u[col as keyof UsuarioBaseInterface];
+    });
+    return fila;
+  });
+  this.excelService.exportAsExcelFile(exportData, `${this.tipoUsuario}_usuarios`);
+}
+
+private formatHeader(header: string): string {
+
+  const mapa: Record<string, string> = {
+    nombre: 'Nombre',
+    apellido: 'Apellido',
+    correo: 'Correo Electronico',
+    dni: 'DNI',
+    edad: 'Edad',
+    obra_social: 'Obra Social',
+    especialidad: 'Especialidad',
+    habilitado: 'Habilitado',
+    usuario: 'Usuario',
+  };
+  return mapa[header] ?? header;
+}
 }

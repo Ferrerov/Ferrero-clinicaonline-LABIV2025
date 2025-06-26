@@ -1,0 +1,61 @@
+@if(!historiaClinica){
+<div class="pagina">
+  <div class="contenido">
+    <div class="tabla">
+      @if(authService.currentUser()){
+      <app-listado-turnos
+        [usuario]="authService.currentUser()!"
+        (onEnviarTurno)="recibirTurno($event)"
+        (onEnviarComentario)="recibirComentarios($event)"
+      ></app-listado-turnos>
+      }
+    </div>
+    <div class="interaccion">
+      @if(turnoSeleccionado){
+      <h3>Seleccione una opcion</h3>
+      <div class="botones">
+        @if(authService.currentUser()?.tipo === 'paciente'){
+        @if(turnoSeleccionado.estado === 'PENDIENTE' || turnoSeleccionado.estado
+        === 'ACEPTADO'){
+        <button mat-flat-button (click)="cancelarTurno()">
+          Cancelar Turno
+        </button>
+        } @if(turnoSeleccionado.estado === 'COMPLETADO'){ @if(comentariosTurno){
+        <button mat-flat-button (click)="verComentario()">Ver reseña</button>
+        } @else {
+        <button mat-flat-button (click)="calificarTurno()">
+          Calificar atencion
+        </button>
+        } } } @else if (authService.currentUser()?.tipo === 'especialista'){
+        @if(turnoSeleccionado.estado === 'PENDIENTE'){
+        <button mat-flat-button (click)="cancelarTurno()">
+          Cancelar Turno
+        </button>
+        <button mat-flat-button (click)="rechazarTurno()">
+          Rechazar Turno
+        </button>
+        <button mat-flat-button (click)="aceptarTurno()">Aceptar Turno</button>
+        } @if(turnoSeleccionado.estado === 'ACEPTADO'){
+        <button mat-flat-button (click)="finalizarTurno()">
+          Finalizar Turno
+        </button>
+        } @if(turnoSeleccionado.estado === 'COMPLETADO' && validarComentario()){
+        <button mat-flat-button (click)="verComentario()">Ver reseña</button>
+        }} @else{ @if(turnoSeleccionado.estado === 'PENDIENTE'){
+        <button mat-flat-button (click)="cancelarTurno()">
+          Cancelar Turno
+        </button>
+        } }
+      </div>
+      } @else {
+      <div class="sin-seleccion">
+        <h1>Seleccione un turno para ver opciones</h1>
+      </div>
+      }
+    </div>
+  </div>
+</div>
+}
+@else{
+  <app-form-historia-clinica [turnoSeleccionado]="turnoSeleccionado"></app-form-historia-clinica>
+}

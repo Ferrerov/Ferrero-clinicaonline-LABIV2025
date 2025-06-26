@@ -48,6 +48,9 @@ export class SupabaseDbService {
       console.error(`Error al insertar en ${tabla}:`, error);
       throw error;
     }
+    else{
+      console.log(data);
+    }
 
     return data as T;
   }
@@ -56,6 +59,8 @@ export class SupabaseDbService {
     campos: Partial<T>,
     condicion: Partial<T>
   ): Promise<T> {
+    console.log(`Actualizando camps en la tabla ${tabla}, donde `,condicion);
+    console.log(`Campos actualizados: `, campos);
     const { data, error } = await this.supabase
       .from(tabla)
       .update(campos)
@@ -66,6 +71,9 @@ export class SupabaseDbService {
     if (error) {
       console.error(`Error al actualizar en ${tabla}:`, error);
       throw error;
+    }
+    else{
+      console.log(`Se actualizaron los datos correctamente`);
     }
 
     return data as T;
@@ -106,12 +114,13 @@ export class SupabaseDbService {
 
     return data as T[];
   }
+  
   async obtenerRelacionados<T = any>(
-    tablaRelacion: string, // Ej: 'usuario_especialidad'
-    campoReferencia: string, // Ej: 'usuario_uuid'
-    valorReferencia: string, // Ej: uuid del usuario
-    tablaRelacionada: string, // Ej: 'especialidad'
-    campoResultado?: string, // Ej: 'nombre' o '*' si querés todo
+    tablaRelacion: string,
+    campoReferencia: string,
+    valorReferencia: string,
+    tablaRelacionada: string,
+    campoResultado?: string,
   ): Promise<T[]> {
     console.log(`Obteniendo '${campoResultado}' de la tabla '${tablaRelacion}',
        a partir del valor '${valorReferencia}'. Se utiliza la tabla de relacion '${tablaRelacion}'`);
@@ -147,6 +156,70 @@ export class SupabaseDbService {
   }
 
   return (data as T)?.[campoResultado] ?? null;
+}
+
+async buscarPorColumna<T>(
+  tabla: string,
+  columna: string,
+  valor: string | string[]
+): Promise<T[]> {
+  let query = this.supabase.from(tabla).select('*');
+
+  if (Array.isArray(valor)) {
+    query = query.in(columna, valor);
+  } else {
+    query = query.eq(columna, valor);
+  }
+
+  const { data, error } = await query;
+  if (error) {
+    console.error(`Error buscando en ${tabla}:`, error);
+    return [];
+  }
+
+  return data as T[];
+}
+
+async buscarUnoPorColumna<T>(
+  tabla: string,
+  columna: string,
+  valor: string | string[]
+): Promise<T> {
+  let query = this.supabase.from(tabla).select('*');
+
+  if (Array.isArray(valor)) {
+    query = query.in(columna, valor);
+  } else {
+    query = query.eq(columna, valor);
+  }
+
+  const { data, error } = await query.single();
+  if (error) {
+    console.error(`Error buscando en ${tabla}:`, error);
+    return null as T;
+  }
+
+  return data as T;
+}
+
+async buscarPorCondiciones<T>(
+  tabla: string,
+  condiciones: Partial<T>,
+): Promise<T | null> {
+  console.log(`Buscando en la tabla '${tabla}' con condiciones:`, condiciones);
+
+  const { data, error } = await this.supabase
+    .from(tabla)
+    .select('*')
+    .match(condiciones)
+    .single();
+
+  if (error) {
+    console.warn(`Error buscando en ${tabla} con condiciones`, condiciones, error);
+    return null;
+  }
+
+  return (data as T) ?? null;
 }
 
 }

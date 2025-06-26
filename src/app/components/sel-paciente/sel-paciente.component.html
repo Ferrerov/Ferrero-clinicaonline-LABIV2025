@@ -1,0 +1,12 @@
+<div class="pagina">
+    <div class="contenido">
+        <div class="listado">
+            @for (paciente of pacientes; track $index) {
+                <div class="especialista" (click)="pacienteSeleccionado(paciente)">
+                    <span>{{paciente.usuario}}</span>
+                    <img src="{{paciente.imagen_uno}}">
+                </div>
+            }
+        </div>
+    </div>
+</div>

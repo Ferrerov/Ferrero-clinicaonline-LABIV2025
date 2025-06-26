@@ -1,0 +1,11 @@
+<div class="pagina">
+    <div class="contenido">
+        <div class="listado">
+            @for (horario of horariosDisponibles; track $index) {
+                <div class="horario">
+                    <button mat-flat-button (click)="horarioSeleccionado(horario)">{{horario}}</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -30,7 +30,21 @@
         <li class="nav-item">
           <a class="nav-link" href="/login">Iniciar Sesion</a>
         </li>
-        } @if(authService.currentUser()){
+        }@if(authService.currentUser()){ 
+          @if(authService.currentUser()?.tipo != 'administrador'){
+        <li class="nav-item">
+          <a class="nav-link" href="/misturnos">Mis Turnos</a>
+        </li>
+        } @if(authService.currentUser()?.tipo != 'especialista'){
+        <li class="nav-item">
+          <a class="nav-link" href="/solicitar-turnos">Solicitar Turnos</a>
+        </li>
+        }
+        @if(authService.currentUser()?.tipo === 'administrador'){
+        <li class="nav-item">
+          <a class="nav-link" href="/turnos">Turnos</a>
+        </li>
+        }
         <li class="nav-item">
           <a class="nav-link" href="/perfil">Mi Perfil</a>
         </li>
@@ -39,7 +53,7 @@
       @if(authService.currentUser()) {
       <ul class="navbar-nav ms-auto">
         <li class="nav-item d-flex" id="cerrarSesion">
-          <a (click)="authService.logout()">Cerrar Sesion</a>
+          <a (click)="cerrarSesion()">Cerrar Sesion</a>
         </li>
         <li class="nav-item d-flex" id="usuario">
           <img src="{{ authService.currentUser()?.imagenPerfil }}" alt="" />

@@ -1,0 +1,11 @@
+<div class="pagina">
+    <div class="contenido">
+        <div class="listado">
+            @for (dia of dias; track $index) {
+                <div class="dia">
+                    <button mat-flat-button (click)="diaSeleccionado(dia)">{{dia.fecha | date: 'yyyy-MM-dd'}} | {{dia.dia}}</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

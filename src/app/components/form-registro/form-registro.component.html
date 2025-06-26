@@ -188,6 +188,9 @@
               <mat-error>La contraseña es requerida</mat-error>
               }
             </mat-form-field>
+            <div  class="recaptcha">
+            <re-captcha  (resolved)="resolved($event!)" formControlName="recaptcha" siteKey="6Lf0u2orAAAAAK2Vd-hhmvkOibldels1Pz98JO3w"></re-captcha>
+            </div>
             <div class="boton">
               <button class="button" type="submit" mat-flat-button [disabled]="form.invalid">
                 Registrarse

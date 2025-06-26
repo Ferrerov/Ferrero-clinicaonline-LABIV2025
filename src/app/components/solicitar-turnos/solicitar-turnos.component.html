@@ -1,0 +1,132 @@
+<div class="pagina">
+  <div class="contenido">
+    @if(!turnoCargado){
+      <div class="stepper">
+      <mat-stepper linear #stepper labelPosition="bottom">
+        @if(authService.currentUser()?.tipo === 'administrador'){
+        <mat-step [editable]="false">
+          <ng-template matStepLabel>Seleccione el paciente</ng-template>
+          <ng-template matStepContent class="seleccion">
+            <app-sel-paciente
+              (onEnviarPaciente)="
+                recibirPaciente($event); continuarStep(stepper)
+              "
+            ></app-sel-paciente>
+          </ng-template>
+        </mat-step>
+        }
+        <mat-step [editable]="false">
+          <ng-template matStepLabel>Seleccione el especialista</ng-template>
+          <ng-template matStepContent class="seleccion">
+            <app-sel-especialista
+              (onEnviarEspecialista)="
+                recibirEspecialista($event); continuarStep(stepper)
+              "
+            ></app-sel-especialista>
+          </ng-template>
+        </mat-step>
+        <mat-step [editable]="false">
+          <ng-template matStepLabel>Seleccione la especialidad</ng-template>
+          <ng-template matStepContent class="seleccion">
+            <app-sel-especialidad
+              [especialistaSeleccionado]="especialista"
+              (onEnviarEspecialidad)="
+                recibirEspecialidad($event); continuarStep(stepper)
+              "
+            ></app-sel-especialidad>
+          </ng-template>
+        </mat-step>
+        <mat-step [editable]="false">
+          <ng-template matStepLabel>Seleccione el dia</ng-template>
+          <ng-template matStepContent>
+            <app-sel-dia
+              [especialistaSeleccionado]="especialista"
+              [especialidadSeleccionada]="especialidad"
+              (onEnviarDia)="recibirDia($event); continuarStep(stepper)"
+            ></app-sel-dia>
+          </ng-template>
+        </mat-step>
+        <mat-step [editable]="false">
+          <ng-template matStepLabel>Seleccione el horario</ng-template>
+          <ng-template matStepContent>
+            <app-sel-horario
+              [especialistaSeleccionado]="especialista"
+              [especialidadSeleccionada]="especialidad"
+              [diaSeleccionado]="dia"
+              (onEnviarHorario)="recibirHorario($event); continuarStep(stepper)"
+            ></app-sel-horario>
+          </ng-template>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Finalizar</ng-template>
+          <ng-template matStepContent>
+            <div class="ultimo">
+              <h3>Valide los datos de su turno</h3>
+              <div class="listadoDatosTurno">
+                <mat-list>
+                  <mat-list-item>
+                    <mat-icon matListItemIcon>person</mat-icon>
+                    <div matListItemTitle>{{ especialista?.usuario }}</div>
+                    <!-- <div matListItemLine>ESPECIALISTA</div> -->
+                  </mat-list-item>
+                  <mat-divider></mat-divider>
+                  <mat-list-item>
+                    <mat-icon matListItemIcon>medical_information</mat-icon>
+                    <div matListItemTitle>{{ especialidad?.nombre }}</div>
+                    <!-- <div matListItemLine>ESPECIALIDAD</div> -->
+                  </mat-list-item>
+                  <mat-divider></mat-divider>
+                  <mat-list-item>
+                    <mat-icon matListItemIcon>calendar_month</mat-icon>
+                    <div matListItemTitle>
+                      {{ dia?.fecha | date : "yyyy-MM-dd" }}
+                    </div>
+                    <!-- <div matListItemLine>FECHA</div> -->
+                  </mat-list-item>
+                  <mat-divider></mat-divider>
+                  <mat-list-item>
+                    <mat-icon matListItemIcon>today</mat-icon>
+                    <div matListItemTitle>{{ dia?.dia }}</div>
+                    <!-- <div matListItemLine>DIA</div> -->
+                  </mat-list-item>
+                  <mat-divider></mat-divider>
+                  <mat-list-item>
+                    <mat-icon matListItemIcon>schedule</mat-icon>
+                    <div matListItemTitle>{{ horario }}</div>
+                    <!-- <div matListItemLine>HORARIO</div> -->
+                  </mat-list-item>
+                  <mat-divider></mat-divider>
+                </mat-list>
+              </div>
+              <div class="botones">
+                <button mat-button (click)="redireccionar('home')" id="cancelar">
+                  Cancelar
+                </button>
+                <button mat-button (click)="stepper.reset()" id="volver">
+                  Volver
+                </button>
+                <button mat-button (click)="cargarTurno()" id="cargar">
+                  Cargar turno
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </mat-step>
+      </mat-stepper>
+    </div>
+    }
+    @else {
+      <div class="cargado">
+        <div class="mensaje">
+          <mat-icon>event_available</mat-icon>
+          <h1>Turno cargado correctamente</h1>
+        </div>
+        <div class="botones">
+          <button mat-button (click)="redireccionar('misturnos')" id="cargar">
+              Ir a mis turnos
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>

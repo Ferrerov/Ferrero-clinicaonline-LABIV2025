@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -11,4 +12,10 @@ import { AuthService } from '../../services/auth.service';
 })
 export class NavbarComponent {
   authService = inject(AuthService);
+  router = inject(Router);
+
+  cerrarSesion(){
+    this.authService.logout();
+    this.router.navigateByUrl('/bienvenida');
+  }
 }

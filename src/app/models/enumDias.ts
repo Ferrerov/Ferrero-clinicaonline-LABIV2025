@@ -1,4 +1,4 @@
-export enum Dias {
+export enum enumDias {
   LUNES = 'LUNES',
   MARTES = 'MARTES',
   MIERCOLES = 'MIERCOLES',

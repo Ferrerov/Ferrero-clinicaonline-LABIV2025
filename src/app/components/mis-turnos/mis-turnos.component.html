@@ -1,0 +1,7 @@
+<div class="pagina">
+  <div class="contenido">
+    @if(authService.currentUser()){
+    <app-listado-turnos [usuario]="authService.currentUser()!"> </app-listado-turnos>
+    }
+  </div>
+</div>

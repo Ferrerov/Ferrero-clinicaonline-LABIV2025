@@ -75,7 +75,6 @@ export class LoginComponent {
               this.errorSupabase = 'Las credenciales no son validas';
             }
           } else {
-            //this.router.navigateByUrl('/home');
             console.log('Se inicio sesion');
             this.router.navigateByUrl('/home');
           }

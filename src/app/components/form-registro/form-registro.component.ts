@@ -32,6 +32,7 @@ import { ObraSocialInterface } from '../../interfaces/obra-social.interface';
 import { UsuarioObraSocialInterface } from '../../interfaces/usuarios-obra-social.interface';
 import { UsuariosEspecialidadInterface } from '../../interfaces/usuarios-especialidad.interface';
 import { RegistroService } from '../../services/registro.service';
+import { RecaptchaFormsModule, RecaptchaModule } from "ng-recaptcha-2";
 
 @Component({
   selector: 'app-form-registro',
@@ -47,6 +48,8 @@ import { RegistroService } from '../../services/registro.service';
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
+    RecaptchaModule,
+    RecaptchaFormsModule
   ],
   templateUrl: './form-registro.component.html',
   styleUrl: './form-registro.component.scss',
@@ -104,6 +107,7 @@ export class FormRegistroComponent {
     imagen_dos: [''],
     especialidad: [[]],
     obra_social: [''],
+    recaptcha: [null, Validators.required],
   });
 
   ngOnInit(): void {
@@ -136,12 +140,19 @@ export class FormRegistroComponent {
     }
     this.form.updateValueAndValidity();
   }
+
+  resolved(captchaResponse: string) {
+    console.log(`Resolved captcha with response: ${captchaResponse}`);
+  }
   
   async onSubmit() {
     const rawForm = this.form.getRawValue();
     const resultado  = await this.registroService.registrarUsuario(rawForm, this.imagenes[1](), this.imagenes[2](), this.tipoUsuario);
-    if(!resultado.exito && resultado.mensaje)
-    this.errorSupabase = resultado.mensaje;
+    if(!resultado.exito && resultado.mensaje){
+    this.errorSupabase = resultado.mensaje;}
+    else{
+      this.router.navigateByUrl('/turnos');
+    }
   }
 
   clickEvent(event: MouseEvent) {

@@ -80,12 +80,13 @@
               <mat-divider></mat-divider>
               <mat-list-item>
                 <mat-icon matListItemIcon>medical_information</mat-icon>
-                <div matListItemTitle>{{ usuario?.usuario }}</div>
+                <div matListItemTitle>{{ obra.nombre }}</div>
                 <div matListItemLine>OBRA SOCIAL</div>
               </mat-list-item>
               }
             </mat-list>
           </div>
+          @if(authService.currentUser()?.tipo === 'especialista'){
           <div class="especialidades">
             <mat-list>
               <div mat-subheader>ESPECIALIDADES</div>
@@ -99,6 +100,7 @@
               }
             </mat-list>
           </div>
+          }
         </div>
       </div>
       } @else {

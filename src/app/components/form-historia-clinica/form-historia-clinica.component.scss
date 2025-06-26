@@ -1,0 +1,96 @@
+.pagina {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .contenido {
+    background-color: #112138;
+    height: 90%;
+    width: 90%;
+    border-radius: 5px;
+    .formulario {
+      height: 100%;
+      width: 100%;
+      text-align: center;
+      padding: 1%;
+      .campos {
+        height: 80%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .columnas {
+          height: 80%;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .columna {
+            width: 50%;
+            height: 70%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            mat-form-field {
+              width: 300px;
+              height: 76px;
+              margin: 5px;
+
+              --mdc-outlined-text-field-caret-color: #cba368;
+              --mdc-outlined-text-field-focus-outline-color: #cba368;
+              --mdc-outlined-text-field-focus-label-text-color: #cba368;
+              --mdc-outlined-text-field-hover-outline-color: #cba368;
+              margin-top: .5%;
+              input {
+                color: #eaf4f8;
+              }
+              input::-webkit-outer-spin-button,
+              input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+              }
+            
+            }
+          }
+          button {
+            width: 200px;
+            border-radius: 5px;
+            background-color: #cba368;
+          }
+          .der {
+            .dato-dinamico {
+              display: flex;
+              gap: 15px;
+              justify-content: center;
+              align-items: start;
+              #dato {
+                width: 100px;
+              }
+              #valor {
+                width: 150px;
+              }
+              button {
+                width: 50px;
+                height: 50px;
+                margin-top: 8px;
+                color: #EAF4F8;
+              }
+            }
+          }
+        }
+        .botones{
+            height: 20%;
+            width: 100%;
+            button{
+                background-color: #cba368;
+                border-radius: 5px;
+                width: 300px;
+            }
+        }
+      }
+    }
+  }
+}

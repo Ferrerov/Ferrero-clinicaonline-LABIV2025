@@ -1,0 +1,118 @@
+<div class="pagina">
+  <div class="contenido">
+    <div class="formulario">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <h4>Ingrese los datos de la historia clinica</h4>
+        <div class="campos">
+          <div class="columnas">
+            <div class="columna izq">
+              <mat-form-field appearance="outline">
+                <mat-label>Altura</mat-label>
+                <input
+                  matInput
+                  placeholder="180"
+                  formControlName="altura"
+                  type="number"
+                />
+                <mat-icon matSuffix>height</mat-icon>
+                @if (form.get('altura')?.hasError('required')) {
+                <mat-error>La altura es requerida</mat-error>
+                }
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Peso</mat-label>
+                <input
+                  matInput
+                  placeholder="80"
+                  formControlName="peso"
+                  type="number"
+                />
+                <mat-icon matSuffix>height</mat-icon>
+                @if (form.get('peso')?.hasError('required')) {
+                <mat-error>El peso es requerido</mat-error>
+                }
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Peso</mat-label>
+                <input
+                  matInput
+                  placeholder="36"
+                  formControlName="temperatura"
+                  type="number"
+                />
+                <mat-icon matSuffix>height</mat-icon>
+                @if (form.get('temperatura')?.hasError('required')) {
+                <mat-error>La temperatura es requerida</mat-error>
+                }
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Peso</mat-label>
+                <input
+                  matInput
+                  placeholder="36"
+                  formControlName="presion"
+                  type="number"
+                />
+                <mat-icon matSuffix>height</mat-icon>
+                @if (form.get('presion')?.hasError('required')) {
+                <mat-error>La temperatura es requerida</mat-error>
+                }
+              </mat-form-field>
+            </div>
+            <div class="columna der">
+              @if(datosDinamicos){ @for(unDato of datosDinamicos; track $index){
+              <div class="dato-dinamico">
+                <mat-form-field appearance="outline" id="dato">
+                  <mat-label>Clave</mat-label>
+                  <input
+                    matInput
+                    [formControlName]="'clave_' + $index"
+                    placeholder="Ej: caries"
+                    required
+                  />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" id="valor">
+                  <mat-label>Valor</mat-label>
+                  <input
+                    matInput
+                    [formControlName]="'valor_' + $index"
+                    placeholder="Ej: 4"
+                    required
+                  />
+                </mat-form-field>
+                <button
+                  mat-icon-button
+                  (click)="eliminarDato($index)"
+                  aria-label="Eliminar dato"
+                  type="button"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+
+              } } @if(datosDinamicos.length < 3){
+              <button class="button" type="button" mat-flat-button (click)="agregarDato()">
+                Agregar dato
+              </button>
+              }
+            </div>
+          </div>
+          <div class="botones">
+            <button
+              class="button"
+              type="submit"
+              mat-flat-button
+              [disabled]="form.invalid"
+            >
+              Guardar
+            </button>
+          </div>
+          @if (errorSupabase !== null) {
+          <mat-error id="errorSupabase">{{ errorSupabase }}</mat-error>
+          }
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

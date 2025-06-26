@@ -1,0 +1,12 @@
+<div class="pagina">
+    <div class="contenido">
+        <div class="listado">
+            @for (esp of especialidades; track $index) {
+                <div class="especialista" (click)="especialidadSeleccionada(esp)">
+                    <img src="{{esp.imagen === null ? imagenDefault : esp.imagen}}">
+                    <span>{{esp.nombre}}</span>
+                </div>
+            }
+        </div>
+    </div>
+</div>

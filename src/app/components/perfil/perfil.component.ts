@@ -30,7 +30,7 @@ export class PerfilComponent {
   supabase = inject(SupabaseDbService);
   botonSeleccionado: 'datos' | 'horarios' = 'datos';
   usuario: UsuarioBaseInterface | null = null;
-  obra: ObraSocialInterface[] | null = null;
+  obra!: ObraSocialInterface;
   especialidades: EspecialidadInterface[]  | null = null;
 
   async ngOnInit(): Promise<void> {
@@ -43,10 +43,12 @@ export class PerfilComponent {
       );
       if (res?.uuid) {
         this.usuario = res;
-        console.log(this.usuario);
       }
       if (user.tipo === 'paciente') {
-        this.obra = await this.supabase.obtenerRelacionados<ObraSocialInterface>('usuarios_obra_social','id_usuario',user.uid,'obra_social','*');
+        const obras = await this.supabase.obtenerRelacionados<ObraSocialInterface>('usuarios_obra_social','usuario_id',user.uid,'obra_social','*');
+        if(obras){
+          this.obra = obras[0];
+        }
       }
       if (user.tipo === 'especialista') {
         this.especialidades = await this.supabase.obtenerRelacionados<EspecialidadInterface>('usuarios_especialidad','usuario_id',user.uid,'especialidad','*');

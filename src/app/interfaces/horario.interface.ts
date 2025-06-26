@@ -1,9 +1,9 @@
-import { Dias } from "../models/dias";
+import { enumDias } from "../models/enumDias";
 
 export interface HorarioInterface {
-  uuid?: string;
+  id?: string;
   usuarios_especialidad_id: string;
-  dia: Dias;
+  dia: enumDias;
   hora_desde: string;
   hora_hasta: string;
 }

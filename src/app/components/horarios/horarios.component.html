@@ -4,7 +4,7 @@
       <div class="titulo">Seleccione la especialidad</div>
       <div class="botones">
         @for (esp of especialidades; track $index) {
-        <button mat-flat-button (click)="seleccionarEsp(esp)">
+        <button mat-flat-button (click)="seleccionarEsp(esp)" [ngClass]="{'esp-seleccionada': espSeleccionada?.nombre  === esp.nombre}">
           {{ esp.nombre }}
         </button>
         }

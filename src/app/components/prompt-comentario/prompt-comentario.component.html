@@ -1,0 +1,24 @@
+<div>
+  <h2 mat-dialog-title>{{ data.tituloPrompt }}</h2>
+  <mat-dialog-content>
+    <mat-form-field class="example-full-width" appearance="outline">
+      <mat-label>{{ data.labelPrompt }}</mat-label>
+      <textarea
+        matInput
+        placeholder="Ingrese el comentario"
+        [(ngModel)]="comentarioTexto"
+        disabled="{{ data.visualizacion }}"
+      ></textarea>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    @if(data.visualizacion){
+    <button mat-button mat-dialog-close>Cerrar</button>
+    }@else {
+    <button mat-button [mat-dialog-close]="'cancelado'">Cancelar</button>
+    <button mat-button [mat-dialog-close]="comentarioTexto" cdkFocusInitial>
+      Confirmar
+    </button>
+    }
+  </mat-dialog-actions>
+</div>

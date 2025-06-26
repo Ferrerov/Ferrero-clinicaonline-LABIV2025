@@ -1,0 +1,30 @@
+.pagina{
+    width: 100%;
+    height: 100%;
+    .contenido{
+        width: 100%;
+        height: 100%;
+        //background-color: aqua;
+        .listado{
+            height: 100%;
+            width: 100%;
+            display: flex;
+            overflow: hidden;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            .horario{
+                margin: 1%;
+                width: 100px;
+                height: 100px;
+                button{
+                    background-color: #CBA368;
+                    border-radius: 5px;
+                    width: 100%;
+                    height: 100%;
+                    font-size: larger;
+                }
+            }
+        }
+    }
+}

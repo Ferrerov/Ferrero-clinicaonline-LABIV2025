@@ -1,0 +1,38 @@
+<div class="pagina">
+  <div class="contenido">
+    <div class="filtro">
+      <mat-form-field appearance="outline">
+        <mat-label>Filtro</mat-label>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Valentin Ferrero"
+          #input
+        />
+      </mat-form-field>
+    </div>
+    <div class="tabla">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8"
+        matSort
+      >
+        @for (column of columnsToDisplay; track column) {
+        <ng-container [matColumnDef]="column">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ obtenerNombreColumna(column) }}
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+        </ng-container>
+        }
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: columnsToDisplay"
+          (click)="onTurnoSeleccionado(row); onVerComentario(row)"
+        ></tr>
+      </table>
+    </div>
+  </div>
+</div>

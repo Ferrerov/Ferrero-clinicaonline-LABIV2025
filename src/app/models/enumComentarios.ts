@@ -1,0 +1,7 @@
+export enum EnumComentarios {
+  CANCEL_PAC = 'CANCEL_PAC',
+  CANCEL_ESP = 'CANCEL_ESP',
+  RECHAZO = 'RECHAZO',
+  RESENA = 'RESENA',
+  CALIFICACION = 'CALIFICACION'
+}

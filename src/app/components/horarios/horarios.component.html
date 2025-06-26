@@ -75,6 +75,9 @@
             </mat-form-field>
           </div>
           <div class="boton">
+            @if(errorSupabase  !==  ''){
+              <p>{{errorSupabase}}</p>
+            }
               <button class="button" type="submit" mat-flat-button [disabled]="form.invalid">
                 Registrarse
               </button>

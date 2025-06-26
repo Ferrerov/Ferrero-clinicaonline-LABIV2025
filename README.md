@@ -1,59 +1,29 @@
-# Clinicaonline
+# 🏥 Clinica Online
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.6.
+La Clinica Online es una aplicación web para la gestión de turnos, pacientes, historias clínicas y especialistas de la salud. Desarrollada con Angular 19 y Supabase como backend, permite a pacientes, especialistas y administradores interactuar en la plataforma.
 
-## Development server
+## 🚀 Características principales
 
-To start a local development server, run:
+- Registro y autenticacion de usuarios (paciente, especialista, administrador)
+- Asignacion y gestion de turnos
+- Carga y visualizacion de historias clinicas
+- Comentarios y reseñas sobre la atencion recibida
+- Gestion de horarios personalizados por especialidad
+- Panel de administrador con control sobre usuarios y turnos
 
-```bash
-ng serve
-```
+## 👥 Roles de usuarios
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### 👤 Paciente
+- Solicita turnos con especialistas segun la especialidad
+- Puede cancelar y calificar turnos
+- Visualiza su historia clinica
 
-## Code scaffolding
+### 🩺 Especialista
+- Configura sus horarios por especialidad
+- Acepta o rechaza turnos
+- Carga la historia clinica
+- Accede a los pacientes que atendio
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### 🛠️ Administrador
+- Visualiza todos los turnos del sistema
+- Gestiona usuarios y sus permisos

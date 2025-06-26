@@ -76,7 +76,7 @@ export class LoginComponent {
             }
           } else {
             console.log('Se inicio sesion');
-            this.router.navigateByUrl('/home');
+            this.router.navigateByUrl('/misturnos');
           }
         });
     }

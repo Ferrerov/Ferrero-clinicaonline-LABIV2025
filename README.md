@@ -69,3 +69,34 @@ La Clinica Online es una aplicación web para la gestión de turnos, pacientes, 
    - El paciente puede dejar una reseña una vez que el turno ha sido completado.
 ![Calificar turno](https://crhmhrazcvpkqjxorqfl.supabase.co/storage/v1/object/public/assets/capturas/Calificacion%20del%20turno.PNG)
 
+
+6. **Descargar historia clinica**
+   - El paciente puede descargar su historia clinica completa.
+![Descargar historia](https://crhmhrazcvpkqjxorqfl.supabase.co/storage/v1/object/public/assets/capturas/Descarga%20Historia%20Paciente.PNG)
+
+
+7. **Ver historias clinicas y turnos del paciente**
+   - El especialista puede ver loss turnos e historias clinicas de pacientes que haya atendido alguna vez.
+   Primero selecciona el usuario que haya atendido.
+![Seleccionar Paciente](https://crhmhrazcvpkqjxorqfl.supabase.co/storage/v1/object/public/assets/capturas/Pacientes%20Seleccion.PNG)
+   Luego puede ver los turnos e historias de dicho paciente, seleccionando el turno que corresponda.
+![Ver turnos paciente](https://crhmhrazcvpkqjxorqfl.supabase.co/storage/v1/object/public/assets/capturas/Pacientes%20Turnos.PNG)
+
+
+8. **Ver historias de todos**
+   - Como administrador, se puden ver todas las historias clinicas existentes.
+![Ver historia admin](https://crhmhrazcvpkqjxorqfl.supabase.co/storage/v1/object/public/assets/capturas/Usuarios%20Historia.PNG)
+
+
+9. **Descarga de turnos de pacientes**
+   - Como administrador, se puden descargar los datos de los turnos de los pacientes.
+![Descarga turnos](https://crhmhrazcvpkqjxorqfl.supabase.co/storage/v1/object/public/assets/capturas/Usuarios%20Descargar%20Seleccion.PNG)
+
+
+10. **Informes de la Clinica**
+   - Como administrador, se puede acceder a informes y estadisticas.
+   Por ejemplo, un informe de los logs de ingresos:
+![Informe Ingresos](https://crhmhrazcvpkqjxorqfl.supabase.co/storage/v1/object/public/assets/capturas/Informes%20Ingresos.PNG)
+   Otro ejemplo, graficos de turnos solicitados:
+![Informe Turnos](https://crhmhrazcvpkqjxorqfl.supabase.co/storage/v1/object/public/assets/capturas/Informes%20Turnos%20Solicitados.PNG)
+

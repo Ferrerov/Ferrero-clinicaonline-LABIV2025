@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ControlDescargaDirective {
   @Input() tiempo = 5000;
-  @Output() debounceClick = new EventEmitter<void>();
+  @Output() descargar = new EventEmitter<void>();
 
   private ultimoClick: number = 0;
 
@@ -22,7 +22,7 @@ export class ControlDescargaDirective {
 
     if (diff >= this.tiempo) {
       this.ultimoClick = now;
-      this.debounceClick.emit();
+      this.descargar.emit();
     } else {
       const segundosRestantes = Math.ceil((this.tiempo - diff) / 1000);
       this.snackBar.open(

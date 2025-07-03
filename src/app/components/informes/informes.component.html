@@ -31,13 +31,13 @@
         <button
         mat-flat-button
         appControlDescarga
-        (debounceClick)="descargarExcel()"
+        (descargar)="descargarExcel()"
       >
         <mat-icon>download</mat-icon>
         Excel
       </button>
         <button mat-flat-button appControlDescarga
-        (debounceClick)="descargarPDF()">
+        (descargar)="descargarPDF()">
           <mat-icon>download</mat-icon>
           PDF
         </button>

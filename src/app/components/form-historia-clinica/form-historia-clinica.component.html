@@ -13,7 +13,9 @@
                   placeholder="180"
                   formControlName="altura"
                   type="number"
+                  
                 />
+                <span matTextSuffix>Cm</span>
                 <mat-icon matSuffix>height</mat-icon>
                 @if (form.get('altura')?.hasError('required')) {
                 <mat-error>La altura es requerida</mat-error>
@@ -27,7 +29,8 @@
                   formControlName="peso"
                   type="number"
                 />
-                <mat-icon matSuffix>height</mat-icon>
+                <span matTextSuffix>Kg</span>
+                <mat-icon matSuffix>balance</mat-icon>
                 @if (form.get('peso')?.hasError('required')) {
                 <mat-error>El peso es requerido</mat-error>
                 }
@@ -40,7 +43,7 @@
                   formControlName="temperatura"
                   type="number"
                 />
-                <mat-icon matSuffix>height</mat-icon>
+                <mat-icon matSuffix>device_thermostat</mat-icon>
                 @if (form.get('temperatura')?.hasError('required')) {
                 <mat-error>La temperatura es requerida</mat-error>
                 }
@@ -53,7 +56,7 @@
                   formControlName="presion"
                   type="number"
                 />
-                <mat-icon matSuffix>height</mat-icon>
+                <mat-icon matSuffix>blood_pressure</mat-icon>
                 @if (form.get('presion')?.hasError('required')) {
                 <mat-error>La presion es requerida</mat-error>
                 }

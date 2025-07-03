@@ -1,0 +1,45 @@
+<div class="pagina">
+  <div class="contenido">
+    <div class="titulo">
+      <h2>Turnos {{tipo ==='solicitados' ? 'solicitados' : 'completados'}} por especialista</h2>
+    </div>
+    <div class="datos">
+      <div class="fechas">
+        <mat-form-field appearance="outline">
+          <mat-label>Desde</mat-label>
+          <input
+            matInput
+            [matDatepicker]="start"
+            [(ngModel)]="fechaInicio"
+            (dateChange)="generarGrafico()"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="start"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #start></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Hasta</mat-label>
+          <input
+            matInput
+            [matDatepicker]="end"
+            [(ngModel)]="fechaFin"
+            (dateChange)="generarGrafico()"
+          />
+          <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+          <mat-datepicker #end></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="grafico" #grafico>
+        <canvas
+          baseChart
+          [data]="chartData"
+          [type]="chartType"
+          [options]="{ responsive: false }"
+        >
+        </canvas>
+      </div>
+    </div>
+  </div>
+</div>

@@ -29,5 +29,6 @@ export class PromptComentarioComponent {
     {
       this.comentarioTexto = this.data.comentario;
     }
+    console.log(this.comentarioTexto);
   }
 }

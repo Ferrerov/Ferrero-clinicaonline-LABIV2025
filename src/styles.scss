@@ -1,4 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+html, body { height: 100%; 
+  --mat-menu-container-shape: 5px;
+
+  /* color */
+  --mat-menu-item-label-text-color: white;
+  --mat-menu-item-icon-color: white;
+  --mat-menu-item-hover-state-layer-color: rgba(255, 255, 255, .08);
+  --mat-menu-item-focus-state-layer-color: rgba(255, 255, 255, .08);
+  --mat-menu-container-color: #CBA368;
+
+  /* typography */
+  --mat-menu-item-label-text-font: Roboto, sans-serif;
+  --mat-menu-item-label-text-size: 16px;
+  --mat-menu-item-label-text-tracking: .03125em;
+  --mat-menu-item-label-text-line-height: 24px;
+  --mat-menu-item-label-text-weight: 400}
+
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; color: #eaf4f8; }
+
+*::-webkit-scrollbar {
+  width: 5px;
+}
+
+*::-webkit-scrollbar-track {
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #CBA368;
+  border-radius: 5px;
+}

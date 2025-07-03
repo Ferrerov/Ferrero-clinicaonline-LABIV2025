@@ -1,0 +1,61 @@
+.pagina {
+    width: 100%;
+    height: 100%;
+
+    .contenido {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        justify-content: center;
+        align-items: center;
+
+        .titulo {
+            height: 15%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .datos {
+            height: 85%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: end;
+            gap: 1%;
+
+            .fechas {
+                width: 29%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                mat-form-field {
+                    --mdc-outlined-text-field-caret-color: #cba368;
+                    --mdc-outlined-text-field-focus-outline-color: #cba368;
+                    --mdc-outlined-text-field-focus-label-text-color: #cba368;
+                    --mdc-outlined-text-field-hover-outline-color: #cba368;
+                    --mdc-outlined-text-field-label-text-color: #EAF4F8;
+                    --mdc-outlined-text-field-hover-label-text-color: #cba368;
+                    input{
+                        color: #EAF4F8;
+                    }
+                }
+            }
+
+            .grafico {
+                width: 70%;
+                height: 100%;
+
+                canvas {
+                    height: 90%;
+                }
+            }
+
+        }
+    }
+}

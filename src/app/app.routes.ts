@@ -12,4 +12,6 @@ export const routes: Routes = [
   { path: 'turnos', loadComponent: () => import('./components/turnos/turnos.component').then(m => m.TurnosComponent) },
   { path: 'misturnos', loadComponent: () => import('./components/turnos/turnos.component').then(m => m.TurnosComponent) },
   { path: 'historiaclinica', loadComponent: () => import('./components/form-historia-clinica/form-historia-clinica.component').then(m => m.FormHistoriaClinicaComponent) },
+  { path: 'pacientes', loadComponent: () => import('./components/pacientes/pacientes.component').then(m => m.PacientesComponent) },
+  { path: 'informes', loadComponent: () => import('./components/informes/informes.component').then(m => m.InformesComponent) },
 ];

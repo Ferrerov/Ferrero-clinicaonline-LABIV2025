@@ -1,10 +1,11 @@
-.pagina{
+.pagina {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     /*.cerrar{
         position: absolute;
         top: 1%;
@@ -15,42 +16,62 @@
             color: #F7F7F2;
         }
     }*/
-    .contenido{
-        width: 80%;
+    .contenido {
+        width: 90%;
         height: 100%;
         padding: 1%;
         display: flex;
         flex-direction: column;
-        .botones{
+
+        .flotante {
+            position: absolute;
+            bottom: 3%;
+            left: 1.5%;
+
+            button {
+                background-color: #CBA368;
+                color: #EAF4F8;
+                display: flex;
+                border-radius: 5px;
+            }
+        }
+
+        .botones {
             height: 15%;
             width: 100%;
             display: flex;
             padding-bottom: 1%;
-            .caja{
+            min-height: 60px;
+
+            .caja {
                 padding: 1%;
                 background-color: #112138;
                 border-radius: 5px;
-                button{
+
+                button {
                     background-color: #CBA368;
                     color: #EAF4F8;
                     border-radius: 5px;
                     height: 100%;
                 }
             }
-            .seleccion{
+
+            .seleccion {
                 height: 100%;
-                width: 55%;
+                width: 54%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 margin-right: .5%;
-                button{
+
+                button {
                     width: 30%;
                     margin: auto;
                 }
 
             }
-            .funciones{
+
+            .funciones {
                 height: 100%;
                 //width: 100%;
                 width: 45%;
@@ -60,48 +81,62 @@
                 padding-left: 5%;
                 padding-right: 5%;
                 margin-left: .5%;
-                gap: 5%;
-                button{
+                gap: 3%;
+
+                button {
                     width: 50%;
+                    margin: 0%;
+                    padding: 0%;
                 }
 
             }
 
         }
-        .tabla{
-            height: 100%;
+
+        .tabla {
+            height: 85%;
             width: 100%;
-            table{
+            overflow: scroll;
+            overflow-x: hidden;
+            table {
                 background-color: #112138;
                 color: #F7F7F2;
-                th{
+
+                th {
                     background-color: #CBA368;
                     color: #F7F7F2;
                     border-color: #CBA368;
                     text-align: center;
                 }
-                td{
+
+                td {
                     color: #F7F7F2;
                     border-color: #CBA368;
                     text-align: center;
-                    button{
+
+                    button {
                         border-radius: 5px;
                         width: 90%;
                     }
-                    .habilitado{
-                        background-color: #a82e25;;
+
+                    .habilitado {
+                        background-color: #a82e25;
+                        ;
                         color: #EAF4F8;
                     }
-                    .deshabilitado{
+
+                    .deshabilitado {
                         background-color: #43a027;
                         color: #EAF4F8;
                     }
                 }
-                .imagen{
-                        padding: 1%;
-                        img{
-                            height: 80px;
-                            width: 80px;
+
+                .imagen {
+                    padding: 1%;
+
+                    img {
+                        height: 80px;
+                        width: 80px;
                         max-width: 80px;
                         max-height: 80px;
                         border-radius: 50%;
@@ -112,8 +147,17 @@
                 }
             }
         }
-        .registro{
-            height: 100%;
+
+        .registro {
+            height: 85%;
+        }
+
+        .descarga {
+            height: 85%;
         }
     }
+}
+
+div {
+    --mat-menu-container-color: #112138;
 }

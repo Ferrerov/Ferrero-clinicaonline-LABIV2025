@@ -1,0 +1,16 @@
+<div class="pagina">
+  <div class="contenido">
+    <div class="titulo">
+      <h2>Turnos por Especialidad</h2>
+    </div>
+    <div class="grafico"  #grafico>
+      <canvas
+        baseChart
+        [data]="chartData"
+        [type]="chartType"
+        [options]="{ responsive: false }"
+      >
+      </canvas>
+    </div>
+  </div>
+</div>

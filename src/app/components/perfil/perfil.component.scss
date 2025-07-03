@@ -15,7 +15,6 @@
     .botones {
       height: 10%;
       display: flex;
-      //padding: 0.3%;
       justify-content: center;
       align-items: center;
       gap: 1%;
@@ -27,18 +26,12 @@
         color: #eaf4f8;
         flex: 1;
       }
-      #datos {
-        //margin-right: 0.5%;
-      }
-      #horarios {
-        //margin-left: 0.5%;
-      }
+
       .seleccionado {
         background-color: #cba368;
       }
     }
     .perfil {
-      //background-color: #112138;
       height: 80%;
       border-radius: 5px;
       .datos {
@@ -71,7 +64,6 @@
         .informacion {
           display: flex;
           width: 79%;
-          //flex-direction: column;
           margin-left: 0.5%;
           background-color: #112138;
           border-radius: 5px;
@@ -108,12 +100,45 @@
         width: 100%;
         height: 100%;
         position: relative;
-        app-horarios{
-          position:  absolute;
+        app-horarios {
+          position: absolute;
           height: 100%;
           width: 100%;
-        }    
+        }
+      }
+      .historias {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        display: flex;
+        justify-content: end;
+        button{
+          position: absolute;
+          z-index: 1000;
+          border-radius: 5px;
+          margin-top: 20px;
+          background-color: #cba368;
+          color: #eaf4f8;
+        }
+        app-listado-historia {
+          position: absolute;
+          height: 100%;
+          width: 100%;
+        }
       }
     }
   }
+}
+
+@keyframes rotate-center {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.rotar {
+  animation: rotate-center 1s ease-in-out;
 }

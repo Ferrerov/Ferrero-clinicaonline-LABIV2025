@@ -1,5 +1,26 @@
 <div class="pagina">
   <div class="contenido">
+    <div class="flotante">
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        aria-label="Example icon-button with a menu"
+      >
+        <mat-icon>download_2</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        @if(tipoUsuario){
+        <button mat-menu-item (click)="descargarExcel()">
+          <mat-icon>download</mat-icon>
+          <span>Descargar datos</span>
+        </button>
+        }
+        <button mat-menu-item (click)="cambiarSeleccion('descarga')">
+          <mat-icon>download</mat-icon>
+          <span>Descargar turnos</span>
+        </button>
+      </mat-menu>
+    </div>
     <div class="botones">
       <div class="seleccion caja">
         <button mat-fab extended (click)="cambiarSeleccion('paciente')">
@@ -16,13 +37,13 @@
         </button>
       </div>
       <div class="funciones caja">
-        <button mat-fab extended (click)="cambiarSeleccion(null)">
+        <button mat-fab extended (click)="cambiarSeleccion('registro')">
           <mat-icon>person</mat-icon>
           Registar nuevo
         </button>
-        <button mat-fab extended (click)="descargarExcel()">
-          <mat-icon>download_2</mat-icon>
-          Descargar Excel
+        <button mat-fab extended (click)="cambiarSeleccion('historia')">
+          <mat-icon>article_person</mat-icon>
+          Ver historia clinica
         </button>
       </div>
       <div></div>
@@ -37,7 +58,7 @@
       >
         @for (column of columnsToDisplay; track column) {
         <ng-container [matColumnDef]="column">
-          <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+          <th mat-header-cell *matHeaderCellDef>{{ columnLabels[column] }}</th>
           @if(column === 'imagen_uno') {
           <td mat-cell *matCellDef="let element" class="imagen">
             <img src="{{ element[column] }}" />
@@ -64,10 +85,19 @@
         <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
       </table>
     </div>
-    } @else {
+    }@if(verRegistro){
     <div class="registro">
       <app-registro [habilitado]="true"></app-registro>
     </div>
+    } @if (verDescarga) {
+    <div class="descarga">
+      <app-descarga-turnos></app-descarga-turnos>
+    </div>
+    }
+    @if(verHistoria){
+      <div class="historia">
+        <app-listado-historia></app-listado-historia>
+      </div>
     }
   </div>
 </div>

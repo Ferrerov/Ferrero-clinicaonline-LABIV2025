@@ -1,0 +1,62 @@
+<div class="pagina">
+  <div class="contenido">
+    <div class="botones">
+      <div class="seleccion" style="view-transition-name: seleccion" [class.oculto]="!mostrarContenido">
+        <button mat-flat-button (click)="cambiarSeleccion('ingresos')">
+          Ingresos
+        </button>
+        <button
+          mat-flat-button
+          (click)="cambiarSeleccion('turnos-especialidad')"
+        >
+          Turnos por Especialidad
+        </button>
+        <button mat-flat-button (click)="cambiarSeleccion('turnos-dia')">
+          Turnos por dia
+        </button>
+        <button
+          mat-flat-button
+          (click)="cambiarSeleccion('turnos-solicitados')"
+        >
+          Turnos solicitados
+        </button>
+        <button
+          mat-flat-button
+          (click)="cambiarSeleccion('turnos-completados')"
+        >
+          Turnos completados
+        </button>
+      </div>
+      <div class="descarga" style="view-transition-name: descarga" [class.oculto]="!mostrarContenido">
+        <button
+        mat-flat-button
+        appControlDescarga
+        (debounceClick)="descargarExcel()"
+      >
+        <mat-icon>download</mat-icon>
+        Excel
+      </button>
+        <button mat-flat-button appControlDescarga
+        (debounceClick)="descargarPDF()">
+          <mat-icon>download</mat-icon>
+          PDF
+        </button>
+      </div>
+    </div>
+    <div class="informe" style="view-transition-name: informe" [class.oculto]="!mostrarContenido">
+      @switch (informeSeleccionado) { @case( 'ingresos'){
+      <app-informe-ingresos #componenteInforme></app-informe-ingresos>
+      } @case( 'turnos-especialidad'){
+      <app-informe-turnos-especialidad #componenteInforme></app-informe-turnos-especialidad>
+      } @case( 'turnos-dia'){
+      <app-informe-turnos-dia #componenteInforme></app-informe-turnos-dia>
+      } @case( 'turnos-solicitados'){
+      <app-informe-turnos-solicitados #componenteInforme [tipo]="'solicitados'"></app-informe-turnos-solicitados>
+      } @default{
+      <app-informe-turnos-solicitados #componenteInforme
+        [tipo]="'completados'"
+      ></app-informe-turnos-solicitados>
+      } }
+    </div>
+  </div>
+</div>

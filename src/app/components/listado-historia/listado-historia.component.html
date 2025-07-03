@@ -1,0 +1,39 @@
+<div class="pagina">
+  <div class="contenido">
+    @if(usuario?.tipo === 'paciente'){
+    <div class="filtro">
+      <mat-form-field appearance="outline">
+        <mat-label>Especialista</mat-label>
+        <mat-select required  (selectionChange)="applyFilter($event.value)">
+          @for (esp of especialistasUnicos; track $index) {
+          <mat-option [value]="esp">{{ esp }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+    }
+    <div class="tabla"  id="tabla">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8"
+        matSort
+      >
+        @for (column of columnsToDisplay; track column) {
+        <ng-container [matColumnDef]="column">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ obtenerNombreColumna(column) }}
+          </th>
+          <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+        </ng-container>
+        }
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: columnsToDisplay"
+          (click)="onTurnoSeleccionado(row); onVerComentario(row)"
+        ></tr>
+      </table>
+    </div>
+  </div>
+</div>

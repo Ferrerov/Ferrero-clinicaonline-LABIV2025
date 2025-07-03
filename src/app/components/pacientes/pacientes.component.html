@@ -1,0 +1,33 @@
+<div class="pagina">
+  <div class="contenido">
+    @if(!pacienteSeleccionado){
+    <h2>Pacientes atendidos</h2>
+    <div class="listado">
+      @for (paciente of pacientesAtendidos; track $index) {
+      <div class="especialista" (click)="seleccionarPaciente(paciente)">
+        <span>{{ paciente.usuario }}</span>
+        <img src="{{ paciente.imagen_uno }}" />
+      </div>
+      }
+    </div>
+    } @else {
+      <div class="boton">
+      <button
+        mat-fab
+        extended
+        id="descarga"
+        (click)="volver()"
+      >
+        <mat-icon>keyboard_backspace</mat-icon>
+        Volver
+      </button>
+    </div>
+    <h3>Turnos de {{ pacienteSeleccionado.usuario }}</h3>
+    <app-listado-turnos
+      [usuario]="pacienteSeleccionado"
+      (onEnviarTurno)="verHistoria($event)"
+      (onEnviarComentario)="verResena($event[0])"
+    ></app-listado-turnos>
+    }
+  </div>
+</div>

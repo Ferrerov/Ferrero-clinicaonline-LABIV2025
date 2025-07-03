@@ -1,16 +1,16 @@
 @if(!historiaClinica){
 <div class="pagina">
   <div class="contenido">
-    <div class="tabla">
-      @if(authService.currentUser()){
+    <div class="tabla"  style="view-transition-name: tabla" [class.oculto]="!mostrarContenido">
+      @if(authService.currentUser() && usuario){
       <app-listado-turnos
-        [usuario]="authService.currentUser()!"
+        [usuario]="usuario"
         (onEnviarTurno)="recibirTurno($event)"
         (onEnviarComentario)="recibirComentarios($event)"
       ></app-listado-turnos>
       }
     </div>
-    <div class="interaccion">
+    <div class="interaccion" style="view-transition-name: interaccion" [class.oculto]="!mostrarContenido">
       @if(turnoSeleccionado){
       <h3>Seleccione una opcion</h3>
       <div class="botones">

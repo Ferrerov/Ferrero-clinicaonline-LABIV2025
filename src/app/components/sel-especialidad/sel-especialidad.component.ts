@@ -26,5 +26,5 @@ export class SelEspecialidadComponent {
 
   especialidadSeleccionada(especialidad: EspecialidadInterface){
     this.onEnviarEspecialidad.emit(especialidad);
-  }
+  } 
 }

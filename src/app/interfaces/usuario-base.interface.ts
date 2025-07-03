@@ -1,5 +1,5 @@
 export interface UsuarioBaseInterface {
-  uuid?:string,
+  uuid?:string;
   nombre: string;
   apellido: string;
   edad: number;
@@ -9,4 +9,5 @@ export interface UsuarioBaseInterface {
   habilitado: boolean;
   imagen_uno: string;
   imagen_dos: string |  null;
+  tipo?: 'administrador' | 'paciente' | 'especialista'
 }

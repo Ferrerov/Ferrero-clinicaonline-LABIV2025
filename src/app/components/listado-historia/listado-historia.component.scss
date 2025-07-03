@@ -1,0 +1,83 @@
+.pagina {
+  width: 100%;
+  height: 100%;
+  //max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .contenido {
+    width: 100%;
+    height: 100%;
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    .filtro {
+      width: 100%;
+      mat-form-field {
+        width: 40%;
+        --mdc-outlined-text-field-caret-color: #cba368;
+        --mdc-outlined-text-field-focus-outline-color: #cba368;
+        --mdc-outlined-text-field-focus-label-text-color: #cba368;
+        --mdc-outlined-text-field-hover-outline-color: #cba368;
+        --mdc-outlined-text-field-input-text-placeholder-color: #eaf4f8;
+        --mdc-outlined-text-field-input-text-color: #eaf4f8;
+        --mdc-outlined-text-field-focus-label-text-color: #eaf4f8;
+        --mdc-outlined-text-field-label-text-color: #eaf4f8;
+        --mdc-outlined-text-field-hover-label-text-color: #cba368;
+        --mat-select-panel-background-color: #424242;
+        --mat-select-enabled-trigger-text-color: #eaf4f8;
+        --mat-select-disabled-trigger-text-color: #eaf4f8;
+        --mat-select-placeholder-text-color: #eaf4f8;
+        --mat-select-enabled-arrow-color: #eaf4f8;
+        --mat-select-disabled-arrow-color: #eaf4f8;
+        --mat-select-focused-arrow-color: #eaf4f8;
+        --mat-select-invalid-arrow-color: #eaf4f8;
+
+        margin-top: 0.5%;
+        input {
+          color: #eaf4f8;
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+      }
+    }
+    .tabla {
+      width: 100%;
+      margin: 0%;
+      padding: 0%;
+      border-radius: 5px;
+      //overflow: hidden;
+      overflow: scroll;
+      overflow-x: hidden;
+      table {
+        height: 100%;
+        width: 100%;
+        background-color: #112138;
+        color: #f7f7f2;
+        border-radius: 1vh;
+
+        th {
+          background-color: #cba368;
+          color: #f7f7f2;
+          border-color: #cba368;
+          text-align: center;
+        }
+        td {
+          color: #f7f7f2;
+          border-color: #cba368;
+          text-align: center;
+        }
+        :hover {
+          cursor: pointer;
+          background-color: #cba36873;
+          font-weight: 500;
+          transition: 1000ms;
+        }
+      }
+    }
+  }
+}

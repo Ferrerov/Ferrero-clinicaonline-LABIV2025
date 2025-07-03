@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, inject, signal, ViewEncapsulation } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { SupabaseDbService } from '../../services/supabase.service';
 import { UsuarioBaseInterface } from '../../interfaces/usuario-base.interface';
+import { IngresosInterface } from '../../interfaces/ingresos.interface';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-login',
@@ -27,8 +29,9 @@ import { UsuarioBaseInterface } from '../../interfaces/usuario-base.interface';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   standalone: true,
+  encapsulation: ViewEncapsulation.None,
 })
-export class LoginComponent {
+export class LoginComponent implements AfterViewInit {
   formbuilder = inject(FormBuilder);
   router = inject(Router);
   authService = inject(AuthService);
@@ -40,6 +43,20 @@ export class LoginComponent {
     correo: ['', [Validators.required, Validators.email]],
     contrasena: ['', [Validators.required]],
   });
+
+  private cdr = inject(ChangeDetectorRef);
+mostrarContenido = false;
+
+ngAfterViewInit() {
+  if (document.startViewTransition) {
+    document.startViewTransition(() => {
+      this.mostrarContenido = true;
+      this.cdr.detectChanges();
+    });
+  } else {
+    this.mostrarContenido = true;
+  }
+}
 
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
@@ -64,10 +81,7 @@ export class LoginComponent {
     } else {
       this.authService
         .login(rawForm.correo, rawForm.contrasena)
-        .subscribe((result) => {
-          console.log(result.data);
-          console.log(result.error);
-          console.log(result.error?.message);
+        .subscribe(async (result) => {
           if (result.error) {
             if (result.error.message === 'Email not confirmed') {
               this.errorSupabase = 'Debe verificar su correo';
@@ -75,7 +89,15 @@ export class LoginComponent {
               this.errorSupabase = 'Las credenciales no son validas';
             }
           } else {
-            console.log('Se inicio sesion');
+            if(usuario && usuario.uuid && usuario.tipo){
+              const ingreso : IngresosInterface = {
+                usuario_id: usuario.uuid,
+                correo: usuario.correo,
+                usuario: usuario.usuario,
+                tipo: usuario.tipo
+                };
+              await this.supabase.insertar<IngresosInterface>('ingresos', ingreso)
+            }
             this.router.navigateByUrl('/misturnos');
           }
         });

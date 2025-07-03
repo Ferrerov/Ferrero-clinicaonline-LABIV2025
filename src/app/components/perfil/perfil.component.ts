@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../services/auth.service';
@@ -10,6 +10,8 @@ import { MatListModule } from '@angular/material/list';
 import { ObraSocialInterface } from '../../interfaces/obra-social.interface';
 import { EspecialidadInterface } from '../../interfaces/especialidad.interface';
 import { HorariosComponent } from '../horarios/horarios.component';
+import { ListadoHistoriaComponent } from '../listado-historia/listado-historia.component';
+import { RotarFotoDirective } from '../../directives/rotar-foto.directive';
 
 @Component({
   selector: 'app-perfil',
@@ -19,7 +21,9 @@ import { HorariosComponent } from '../horarios/horarios.component';
     CommonModule,
     MatListModule,
     MatDividerModule,
-    HorariosComponent
+    HorariosComponent,
+    ListadoHistoriaComponent,
+    RotarFotoDirective
   ],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.scss',
@@ -28,10 +32,11 @@ import { HorariosComponent } from '../horarios/horarios.component';
 export class PerfilComponent {
   authService = inject(AuthService);
   supabase = inject(SupabaseDbService);
-  botonSeleccionado: 'datos' | 'horarios' = 'datos';
+  botonSeleccionado: 'datos' | 'horarios' | 'historias' = 'datos';
   usuario: UsuarioBaseInterface | null = null;
-  obra!: ObraSocialInterface;
+  obra: ObraSocialInterface | null = null;
   especialidades: EspecialidadInterface[]  | null = null;
+  @ViewChild(ListadoHistoriaComponent, { static: false }) listadoComponent!: ListadoHistoriaComponent;
 
   async ngOnInit(): Promise<void> {
     try {
@@ -55,6 +60,12 @@ export class PerfilComponent {
       }
     } catch (err) {
       console.error('Error al obtener usuario:', err);
+    }
+  }
+
+  enviarDescarga(){
+    if(this.listadoComponent){
+      this.listadoComponent.descargarPDF();
     }
   }
 }

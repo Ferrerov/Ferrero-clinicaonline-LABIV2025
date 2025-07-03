@@ -1,7 +1,6 @@
 .pagina{
     width: 100%;
     height: 100%;
-    //max-width: 1000px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -37,7 +36,8 @@
             margin: 0%;
             padding: 0%;
             border-radius: 5px;
-            overflow: hidden;
+            overflow: scroll;
+            overflow-x: hidden;
             table{
                 height: 100%;
                 width: 100%;
@@ -55,13 +55,6 @@
                     color: #F7F7F2;
                     border-color: #CBA368;
                     text-align: center;
-                }
-                 :hover{
-                     cursor: pointer;
-                     background-color: #cba36873;
-                     font-weight: 500;
-                    transition: 1000ms;
-                    
                 }
             }
         }

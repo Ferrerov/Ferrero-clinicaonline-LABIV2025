@@ -15,6 +15,9 @@ import { UsuariosEspecialidadInterface } from '../../interfaces/usuarios-especia
 import { UsuarioInterface } from '../../interfaces/usuario.interface';
 import { ComentarioInterface } from '../../interfaces/comentario.interface';
 import { EnumComentarios } from '../../models/enumComentarios';
+import { HistoriaClinicaInterface } from '../../interfaces/historia-clinica.interface';
+import { EstadoTurnoPipe } from '../../pipes/estado-turno.pipe';
+import { HoverEstadoDirective } from '../../directives/hover-estado.directive';
 
 interface TurnoExtendido {
   especialista: string;
@@ -32,6 +35,8 @@ interface TurnoExtendido {
     CommonModule,
     MatFormFieldModule,
     MatInputModule,
+    EstadoTurnoPipe,
+    HoverEstadoDirective
   ],
   templateUrl: './listado-turnos.component.html',
   styleUrl: './listado-turnos.component.scss',
@@ -43,7 +48,7 @@ export class ListadoTurnosComponent {
   turnos: TurnoInterface[] = [];
   comentarios = new Map<string, ComentarioInterface[]>();
 
-  @Input() usuario!: UsuarioInterface;
+  @Input() usuario!: UsuarioBaseInterface;
   @Output() onEnviarTurno = new EventEmitter<TurnoInterface>();
   @Output() onEnviarComentario = new EventEmitter<ComentarioInterface[]>();
 
@@ -61,7 +66,7 @@ export class ListadoTurnosComponent {
 
   async ngOnInit(): Promise<void> {
     const tipo = this.usuario.tipo;
-    const id = this.usuario.uid;
+    const id = this.usuario.uuid;
     const turnos = await this.supabase.buscarTodos<TurnoInterface>('turnos');
     const usuarios = await this.supabase.buscarTodos<UsuarioBaseInterface>(
       'usuarios'
@@ -70,10 +75,13 @@ export class ListadoTurnosComponent {
       await this.supabase.buscarTodos<UsuariosEspecialidadInterface>(
         'usuarios_especialidad'
       );
-    const especialidades =
+    const especialidades = 
       await this.supabase.buscarTodos<EspecialidadInterface>('especialidad');
     this.turnos = turnos;
     const comentarios = await this.cargarComentarios();
+    const historias = await this.supabase.buscarTodos<HistoriaClinicaInterface>(
+      'historias'
+    );
 
     const filas = turnos.map((t) => {
       const usuariosEsp = usuariosEspecialidad.find(
@@ -86,6 +94,8 @@ export class ListadoTurnosComponent {
         (e) => e.id === usuariosEsp?.especialidad_id
       );
       const paciente = usuarios.find((u) => u.uuid === t.usuario_id);
+      const historia = historias.find((u) => u.turno_id === t.id);
+
 
       return {
         id: t.id,
@@ -95,6 +105,7 @@ export class ListadoTurnosComponent {
         fecha: new Date(t.fecha).toLocaleDateString(),
         horario: t.horario,
         estado: t.estado,
+        historia: historia
       };
     });
 
@@ -138,6 +149,34 @@ export class ListadoTurnosComponent {
       ];
     }
 
+    this.dataSource.filterPredicate = (data: any, filter: string): boolean => {
+  const texto = filter.trim().toLowerCase();
+
+  const camposVisibles = this.columnsToDisplay
+    .map((col) => (data[col] ?? '').toString().toLowerCase())
+    .join(' ');
+
+  let historiaText = '';
+  const historia = data.historia;
+
+  if (historia) {
+    const { altura, peso, temperatura, presion, datos_dinamicos } = historia;
+    historiaText += `${altura ?? ''} ${peso ?? ''} ${temperatura ?? ''} ${presion ?? ''} `;
+
+    if (datos_dinamicos) {
+      for (const [clave, valor] of Object.entries(datos_dinamicos)) {
+        historiaText += `${clave.toLowerCase()} ${(valor as string).toLowerCase()} `;
+      }
+    }
+  }
+
+  const contenidoCompleto = `${camposVisibles} ${historiaText}`;
+
+  return contenidoCompleto.includes(texto);
+};
+
+
+
     this.dataSource.data = filtrado;
   }
   async cargarComentarios(): Promise<void> {
@@ -163,7 +202,6 @@ export class ListadoTurnosComponent {
     const turnoSeleccionado: TurnoInterface = this.turnos.find(
       (u) => u.id === turno.id
     )!;
-    console.log(turnoSeleccionado);
     this.onEnviarTurno.emit(turnoSeleccionado);
   }
 

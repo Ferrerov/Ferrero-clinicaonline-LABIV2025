@@ -1,4 +1,9 @@
-import { Component, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  ViewEncapsulation,
+} from '@angular/core';
 import { ListadoTurnosComponent } from '../listado-turnos/listado-turnos.component';
 import { AuthService } from '../../services/auth.service';
 import { TurnoInterface } from '../../interfaces/turno.interface';
@@ -11,6 +16,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { EnumComentarios } from '../../models/enumComentarios';
 import { ComentarioInterface } from '../../interfaces/comentario.interface';
 import { FormHistoriaClinicaComponent } from '../form-historia-clinica/form-historia-clinica.component';
+import { UsuarioBaseInterface } from '../../interfaces/usuario-base.interface';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-turnos',
@@ -22,8 +29,9 @@ import { FormHistoriaClinicaComponent } from '../form-historia-clinica/form-hist
   templateUrl: './turnos.component.html',
   styleUrl: './turnos.component.scss',
   standalone: true,
+  encapsulation: ViewEncapsulation.None,
 })
-export class TurnosComponent {
+export class TurnosComponent implements AfterViewInit {
   authService = inject(AuthService);
   turnoSeleccionado: TurnoInterface | null = null;
   comentariosTurno: ComentarioInterface[] | null = null;
@@ -32,18 +40,42 @@ export class TurnosComponent {
   mostrarPrompt: boolean = true;
   dialog = inject(MatDialog);
   historiaClinica: boolean = false;
+  usuario: UsuarioBaseInterface | null = null;
+
+  private cdr = inject(ChangeDetectorRef);
+  mostrarContenido = false;
+
+  ngAfterViewInit() {
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        this.mostrarContenido = true;
+        this.cdr.detectChanges();
+      });
+    } else {
+      this.mostrarContenido = true;
+    }
+  }
+
+  async ngOnInit() {
+    const usuario = await this.authService.esperarUsuarioAutenticado();
+    if (usuario) {
+      this.usuario = await this.supabaseService.buscarUno<UsuarioBaseInterface>(
+        'usuarios',
+        'uuid',
+        usuario.uid
+      );
+    }
+  }
 
   recibirTurno(turno: TurnoInterface) {
     if (turno) {
       this.turnoSeleccionado = turno;
-      console.log('Turno desde turnos: ', this.turnoSeleccionado);
     }
   }
 
   recibirComentarios(comentario: ComentarioInterface[]) {
     if (comentario) {
       this.comentariosTurno = comentario;
-      console.log('comentario: ', this.comentariosTurno);
     } else {
       this.comentariosTurno = null;
     }
@@ -158,14 +190,13 @@ export class TurnosComponent {
 
     dialogRef.afterClosed().subscribe(async (comentarioTexto: string) => {
       if (comentarioTexto === 'cancelado') {
-        this.router.navigateByUrl('/', { skipLocationChange: true })
+        this.router
+          .navigateByUrl('/', { skipLocationChange: true })
           .then(() => {
             this.router.navigate(['/turnos']);
           });
       } else {
-        
-          
-          if (comentarioTexto && this.turnoSeleccionado) {
+        if (comentarioTexto && this.turnoSeleccionado) {
           let nuevoEstado: enumEstados | null = null;
 
           switch (tipoComentario) {
@@ -201,6 +232,5 @@ export class TurnosComponent {
         }
       }
     });
-    
   }
 }

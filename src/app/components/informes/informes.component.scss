@@ -1,0 +1,107 @@
+.pagina {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .contenido {
+        width: 80%;
+        height: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2%;
+
+        .botones {
+            height: 13%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1%;
+            button {
+                background-color: #CBA368;
+                border-radius: 5px;
+                margin: auto;
+            }
+            .seleccion {
+                background-color: #112138;
+                border-radius: 5px;
+                padding: 1%;
+                display: flex;
+                width: 78%;
+                margin: auto;
+                gap: 1%;
+            }
+            .descarga{
+                background-color: #112138;
+                border-radius: 5px;
+                padding: 1%;
+                display: flex;
+                width: 21%;
+                margin: auto;
+                gap:1%;
+            }
+        }
+
+        .informe {
+            height: 85%;
+            width: 100%;
+            background-color: #112138;
+            border-radius: 5px;
+            overflow: scroll;
+            overflow-x: hidden;
+        }
+    }
+}
+
+.oculto {
+  visibility: hidden;
+}
+
+::view-transition-new(seleccion) {
+animation: slide-in-left .4s linear 0s 1 normal forwards;
+}
+::view-transition-new(descarga) {
+animation: slide-in-right .4s linear 0s 1 normal forwards;
+}
+::view-transition-new(informe) {
+animation: slide-in-bottom .4s linear 0s 1 normal forwards;
+}
+@keyframes slide-in-left {
+	0% {
+		opacity: 0;
+		transform: translateX(-250px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes slide-in-right {
+	0% {
+		opacity: 0;
+		transform: translateX(250px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+@keyframes slide-in-bottom {
+	0% {
+		opacity: 0;
+		transform: translateY(250px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}

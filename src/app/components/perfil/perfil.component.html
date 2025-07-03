@@ -11,6 +11,18 @@
         <mat-icon>person</mat-icon>
         Mis Datos
       </button>
+      @if(authService.currentUser()?.tipo === 'paciente'){
+        <button
+        mat-fab
+        extended
+        id="historia"
+        [ngClass]="{ seleccionado: botonSeleccionado === 'historias' }"
+        (click)="botonSeleccionado = 'historias'"
+      >
+        <mat-icon>person</mat-icon>
+        Mis Historias Clinicas
+      </button>
+      }
       @if(authService.currentUser()?.tipo === 'especialista'){
       <button
         mat-fab
@@ -28,9 +40,9 @@
       @if (botonSeleccionado === 'datos') {
       <div class="datos">
         <div class="imagenes">
-          <img src="{{ usuario?.imagen_uno }}" />
+          <img src="{{ usuario?.imagen_uno }}" appRotarFoto/>
           @if (authService.currentUser()?.tipo === 'paciente') {
-          <img src="{{ usuario?.imagen_dos }}" />
+          <img src="{{ usuario?.imagen_dos }}" appRotarFoto/>
           }
         </div>
         <div class="informacion">
@@ -80,7 +92,7 @@
               <mat-divider></mat-divider>
               <mat-list-item>
                 <mat-icon matListItemIcon>medical_information</mat-icon>
-                <div matListItemTitle>{{ obra.nombre }}</div>
+                <div matListItemTitle>{{ obra?.nombre }}</div>
                 <div matListItemLine>OBRA SOCIAL</div>
               </mat-list-item>
               }
@@ -103,11 +115,25 @@
           }
         </div>
       </div>
-      } @else {
+      } @else if (botonSeleccionado === 'horarios'){
       <div class="horarios">
         <app-horarios [especialidades]="especialidades" [usuario]="usuario"></app-horarios>
       </div>
       }
+       @else {
+        <div class="historias">
+          <button
+        mat-fab
+        extended
+        id="descarga"
+        (click)="enviarDescarga()"
+      >
+        <mat-icon>download</mat-icon>
+        Descargar PDF
+      </button>
+          <app-listado-historia [usuario]="authService.currentUser()!"></app-listado-historia>
+        </div>
+       }
     </div>
   </div>
 </div>

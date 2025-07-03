@@ -18,4 +18,7 @@ export class NavbarComponent {
     this.authService.logout();
     this.router.navigateByUrl('/bienvenida');
   }
+  navegar(ruta:string){
+    this.router.navigateByUrl(`/${ruta}`);
+  }
 }

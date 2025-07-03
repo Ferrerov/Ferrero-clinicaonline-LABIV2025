@@ -19,7 +19,7 @@
 
         <ng-container matColumnDef="fechaFormateada">
           <th mat-header-cell *matHeaderCellDef>Fecha y horario</th>
-          <td mat-cell *matCellDef="let row">{{ row.fecha | fechaLegible }}</td>
+          <td mat-cell *matCellDef="let row">{{ row.fecha | fechaLegible }}</td> 
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="columnas"></tr>

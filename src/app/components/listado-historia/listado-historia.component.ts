@@ -253,13 +253,14 @@ export class ListadoHistoriaComponent {
     if (!paciente) return;
 
     const contenedor = document.createElement('div');
-    contenedor.style.fontFamily = 'Arial, sans-serif';
-    contenedor.style.fontSize = '12px';
-    contenedor.style.color = '#061630';
+    contenedor.style.backgroundColor = '#061630';
+    contenedor.style.padding = '20px';
+    contenedor.style.color = '#EAF4F8';
+    contenedor.style.minHeight = '1122px';
     contenedor.innerHTML = `
     <div style="display: flex; align-items: center; margin-bottom: 10px;">
       <img src="${logo64}" alt="Logo" style="height: 50px; margin-right: 30px;">
-      <h1 style="margin: 0; font-size: 24px; color: #061630;">Clínica Online</h1>
+      <h1 style="margin: 0; font-size: 24px; color: #CBA368;">Clínica Online</h1>
     </div>
     <div style="margin-bottom: 10px;">Fecha de emisión: ${fecha}</div>
     <div style="margin-bottom: 20px;">
@@ -284,10 +285,10 @@ export class ListadoHistoriaComponent {
     contenedor.appendChild(tablaClonada);
 
     const opciones = {
-      margin: 10,
+      margin: 0,
       filename: `historia_clinica_${paciente.apellido}_${fecha}.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
+      html2canvas: { scale: 2, backgroundColor: '#061630' },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
       pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
     };

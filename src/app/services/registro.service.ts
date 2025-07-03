@@ -79,9 +79,10 @@ export class RegistroService {
       if (usuarioNuevo.tipo === 'paciente') {
         const cargado = await this.cargarObraSocialNueva({
           id: undefined,
-          nombre: this.normalizarTexto(rawForm.obra_social),
+          nombre: this.normalizarTexto(rawForm.obra_social)
         });
         if (cargado) {
+          console.log('asociando obra social');
           await this.asociarObraSocial(
             this.normalizarTexto(rawForm.obra_social),
             usuarioNuevo.uuid
@@ -130,18 +131,27 @@ export class RegistroService {
   }
 
   async asociarObraSocial(obra_social: string, id_usuario: string) {
-    this.supabase
-      .buscarUno<ObraSocialInterface>('obra_social', 'nombre', obra_social)
-      .then((res) => {
-        if (!res?.id) return;
+    // this.supabase
+    //   .buscarUno<ObraSocialInterface>('obra_social', 'nombre', obra_social)
+    //   .then((res) => {
+    //     if (!res?.id) return;
+    //     this.supabase.insertar<UsuarioObraSocialInterface>(
+    //       'usuarios_obra_social',
+    //       { usuario_id: id_usuario, obra_social_id: res!.id }
+    //     );
+    //   })
+    //   .catch((err) => {
+    //     console.error('Error al obtener obras sociales:', err);
+    //   });
+
+      const obraSocial : ObraSocialInterface | null = await this.supabase
+      .buscarUno<ObraSocialInterface>('obra_social', 'nombre', obra_social);
+      if(obraSocial && obraSocial.id){
         this.supabase.insertar<UsuarioObraSocialInterface>(
           'usuarios_obra_social',
-          { usuario_id: id_usuario, obra_social_id: res!.id }
+          { usuario_id: id_usuario, obra_social_id: obraSocial.id }
         );
-      })
-      .catch((err) => {
-        console.error('Error al obtener obras sociales:', err);
-      });
+      }
   }
 
   async cargarEspecialidadesNuevas(
@@ -151,8 +161,7 @@ export class RegistroService {
     try {
       const especialidadesCargadas =
         await this.supabase.buscarTodos<EspecialidadInterface>('especialidad');
-      const nombresCargados = especialidadesCargadas.map((e) =>
-        e.nombre);
+      const nombresCargados = especialidadesCargadas.map((e) => e.nombre);
       const especialidadesNuevas = especialidades.filter(
         (esp) => !nombresCargados.includes(esp)
       );
@@ -174,9 +183,16 @@ export class RegistroService {
   ): Promise<{ exito: boolean; mensaje?: string }> {
     try {
       console.log('Validando si hay obras sociales nuevas para cargar');
-      const obrasSocialesCargadas =
+      const obrasSocialesCargadas: ObraSocialInterface[] =
         await this.supabase.buscarTodos<ObraSocialInterface>('obra_social');
-      if (!obrasSocialesCargadas.includes(obra_social)) {
+        console.log('obras sociales cargadas', obrasSocialesCargadas);
+      const yaExiste = obrasSocialesCargadas.some(
+        (os) =>
+          os.nombre.trim().toLowerCase() ===
+          obra_social.nombre.trim().toLowerCase()
+      );
+      console.log('existe?', yaExiste);
+      if (!yaExiste) {
         await this.supabase.insertar<ObraSocialInterface>(
           'obra_social',
           obra_social

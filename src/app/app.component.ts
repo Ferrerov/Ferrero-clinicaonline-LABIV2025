@@ -10,6 +10,6 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   standalone: true,
 })
 export class AppComponent {
-  title = 'clinicaonline';
+  title = 'Clinica Online';
   
 }

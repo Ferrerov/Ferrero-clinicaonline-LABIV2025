@@ -9,8 +9,13 @@
         agenda tu cita en línea.
       </p>
       <div class="botones">
+        @if(!authService.currentUser()){
         <button mat-flat-button (click)="onClick('login')">Iniciar Sesión</button>
         <button mat-flat-button (click)="onClick('registro')">Registrarse</button>
+        }@else {
+        <button mat-flat-button (click)="onClick('home')">Navegar</button>
+        }
+
       </div>
     </div>
     <div class="derecha">

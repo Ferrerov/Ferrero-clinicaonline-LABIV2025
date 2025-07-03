@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-bienvenida',
@@ -10,14 +11,9 @@ import { Router } from '@angular/router';
   standalone: true
 })
 export class BienvenidaComponent {
-
+  authService = inject(AuthService);
   router = inject(Router);
   onClick(tipo: string) {
-    if (tipo === 'registro') {
-      this.router.navigate(['/registro']);
-    }
-    else{
-      this.router.navigate(['/login']);
-    }
+    this.router.navigateByUrl(`/${tipo}`)
   }
 }
